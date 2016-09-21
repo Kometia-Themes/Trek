@@ -1,0 +1,38 @@
+{% if quantity == 1 %}
+
+    {% set col = 'col-sm-6 col-sm-offset-3' %}
+
+{% elseif quantity == 2 %}
+
+    {% set col = 'col-sm-6' %}
+
+{% elseif quantity == 3 %}
+
+    {% set col = 'col-sm-4' %}
+
+{% endif %}
+
+
+{% for i in 1..quantity %}
+
+    {% if items[i].img_url is not empty and items[i].img_url is defined %}
+
+        {% set item_img = items[i].img_url %}
+
+    {% else %}
+
+        {% set item_img = '/assets/default/placeholder.svg' %}
+
+    {% endif %}
+
+    <div class="{{ col }} text-center">
+
+        <div class="featured-advice">
+            <img src="{{ item_img }}" alt="{{ items[i].title }}">
+            <h4 class="c-brand upper">{{ items[i].title }}</h4>
+            <p>{{ items[i].desc }}</p>
+        </div>
+
+    </div>
+
+{% endfor %}

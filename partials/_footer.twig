@@ -1,0 +1,179 @@
+<div class="container">
+    <hr/>
+    <div class="line">
+        {% if settings.footer_display_social %}
+            <br/>
+
+            <div class="scol-20 scol--middle text-center scol--no-mrg-bottom">
+                <h3>Síguenos en</h3>
+            </div>
+            <div class="scol-20 scol--middle text-center">
+                {% include '_social-icons.twig' %}
+            </div>
+        {% endif %}
+        <div class="scol-20 scol--middle text-center">
+            <div class="address-foo">&copy;2016
+                {{ store.name }} {{ settings.footer_contact_data|nl2br }}
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="line inside">
+        <div class="scol-10 scol--middle">
+            <div class="policy-foo">
+                <ul>
+                    {% if settings.policy_url is not empty %}
+                        <li>
+                            <a href="{{ settings.policy_url }}">Aviso de privacidad</a>
+                        </li>
+                    {% endif %}
+                    <li>Desarrollado por SHOPERTI</li>
+                </ul>
+            </div>
+        </div>
+        {% if settings.footer_display_payment_methods %}
+            <div class="scol-10 scol--middle text-right">
+                <div class="payment-foo">
+                    <ul>
+                        {% if settings.accept_visa %}
+                            <li>
+                                <img src="{{ 'payment/visa.png'| asset_url }}" alt="Visa">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_visa %}
+                            <li>
+                                <img src="{{ 'payment/mastercard.png'| asset_url }}" alt="Mastercard">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_visa %}
+                            <li>
+                                <img src="{{ 'payment/amex.png'| asset_url }}" alt="American Express">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_visa %}
+                            <li>
+                                <img src="{{ 'payment/credit-card.png'| asset_url }}" alt="Credit Card">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_paypal %}
+                            <li>
+                                <img src="{{ 'payment/paypal.png'| asset_url }}" alt="Paypal">
+                            </li>
+                        {% endif %}
+
+                        {% if settings.accept_7_eleven %}
+                            <li>
+                                <img src="{{ 'payment/7-eleven.png'| asset_url }}" alt="Credit Card">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_amazon %}
+                            <li>
+                                <img src="{{ 'payment/amazon.png'| asset_url }}" alt="Amazon">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_banamex %}
+                            <li>
+                                <img src="{{ 'payment/banamex.png'| asset_url }}" alt="banamex">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_bancomer %}
+                            <li>
+                                <img src="{{ 'payment/bancomer.png'| asset_url }}" alt="bancomer">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_banorte %}
+                            <li>
+                                <img src="{{ 'payment/banorte.png'| asset_url }}" alt="banorte">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_cash %}
+                            <li>
+                                <img src="{{ 'payment/cash.png'| asset_url }}" alt="Efectivo">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_chedarui %}
+                            <li>
+                                <img src="{{ 'payment/chedarui.png'| asset_url }}" alt="chedarui">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_conekta %}
+                            <li>
+                                <img src="{{ 'payment/conekta.png'| asset_url }}" alt="conekta">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_compro_pago %}
+                            <li>
+                                <img src="{{ 'payment/compro-pago.png'| asset_url }}" alt="compro pago">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_coppel %}
+                            <li>
+                                <img src="{{ 'payment/coppel.png'| asset_url }}" alt="coppel">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_ebay %}
+                            <li>
+                                <img src="{{ 'payment/ebay.png'| asset_url }}" alt="ebay">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_elektra %}
+                            <li>
+                                <img src="{{ 'payment/elektra.png'| asset_url }}" alt="elektra">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_extra %}
+                            <li>
+                                <img src="{{ 'payment/extra.png'| asset_url }}" alt="extra">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_farmacias_abc %}
+                            <li>
+                                <img src="{{ 'payment/farmacias-abc.png'| asset_url }}" alt="farmacias abc">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_farmacias_benavides %}
+                            <li>
+                                <img src="{{ 'payment/farmacias-benavides.png'| asset_url }}" alt="farmacias benavides">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_hsbc %}
+                            <li>
+                                <img src="{{ 'payment/hsbc.png'| asset_url }}" alt="hsbc">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_mercado_pago %}
+                            <li>
+                                <img src="{{ 'payment/mercado-pago.png'| asset_url }}" alt="mercado pago">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_oxxo %}
+                            <li>
+                                <img src="{{ 'payment/oxxo.png'| asset_url }}" alt="oxxo">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_pitico %}
+                            <li>
+                                <img src="{{ 'payment/pitico.png'| asset_url }}" alt="pitico">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_santander %}
+                            <li>
+                                <img src="{{ 'payment/santander.png'| asset_url }}" alt="santander">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_spei %}
+                            <li>
+                                <img src="{{ 'payment/spei.png'| asset_url }}" alt="spei">
+                            </li>
+                        {% endif %}
+                        {% if settings.accept_telecomm %}
+                            <li>
+                                <img src="{{ 'payment/telecomm.png'| asset_url }}" alt="telecomm">
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,52 @@
+{% if settings.show_instagram %}
+
+<div class="instagram-container pad">
+    <div class="container">
+        <div class="row images">
+            <div class="col-sm-12">
+                <h3 class="text-center upper">Instagram</h3>
+                <div class="instagram"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Instagram begin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+
+<!-- BEGIN: Underscore Template Definition. -->
+<script type="text/template" class="template" id="instagram-template">
+    <div class="row">
+    <% _.each(items, function (item) { %>
+    <div class="col-md-2 col-sm-3 col-xs-4">
+        <a href="<%= item.link %>" target="_blank">
+            <img class="img-responsive" src="<%= item.images.thumbnail.url %>" />
+        </a>
+     </div>
+    <% }); %>
+    </div>
+</script>
+
+<!-- END: Underscore Template Definition. -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
+<script>
+    $(function($) {
+        $('.instagram').on('willLoadInstagram', function(event, options) {
+        });
+        $('.instagram').on('didLoadInstagram', function(event, response) {
+       var compiled = _.template($('#instagram-template').html());
+       $(this).html(compiled({ items: response.data }));
+
+        });
+        $('.instagram').instagram({
+            userId: '{{ settings.instagram_id }}',
+            accessToken: '{{ settings.instagram_token }}',
+            count: 12,
+        });
+   });
+ </script>
+
+<!-- Instagram end -->
+{% endif %}
+

@@ -1,0 +1,35 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}
+    En mantenimiento
+{% endblock main_title %}
+
+{% block body %}
+
+    <div class="error text-center">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-12">
+
+                    <h1 class="c-brand upper">En mantenimiento</h1>
+
+                    <p>{{ store.name }} se encuentra en mantenimiento, por favor regresa mas tarde.</p>
+
+                    <div class="pad-min"></div>
+
+                    <a href="/" class="btn">
+                        Volver al inicio
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}

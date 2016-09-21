@@ -1,0 +1,205 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}
+    Contacto
+{% endblock main_title %}
+
+{% block body %}
+
+    <div class="contact pad">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-12 text-center">
+                    <h2 class="c-brand upper">{{ settings.contact_title }}</h2>
+                    <p>{{ settings.contact_description }}</p>
+
+                </div>
+
+                <div class="col-sm-12 pad-min"></div>
+
+                {% if settings.map_is_enabled %}
+
+                    <div class="col-sm-12 text-center map">
+
+                        <div id="map" class="contact__map"></div>
+
+                        <a href="#" class="center-map btn btn--outline">
+                            <i class="fa fa-compass"></i>
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+                <div class="col-sm-12">
+
+                    <div class="placeholder-help">
+
+                        <div class="placeholder-helper">
+
+                            <div class="placeholder-info">
+                                <p>Ocurrió un error con la configuración del mapa, por favor verifica la dirección o la llave de acceso.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-12 pad-min">
+
+                 {% if settings.contact_info %}
+
+                    <div class="col-sm-8">
+
+                        &copy;2016 {{ store.name }} {{ settings.footer_contact_data|nl2br }}
+
+                    </div>
+
+                    <div class="col-sm-4 text-right">
+
+                        {% include '_social-icons.twig' %}
+
+                    </div>
+
+                    <div class="col-sm-12 pad"></div>
+
+                    <div class="col-sm-12 text-center">
+                        <h2 class="c-brand upper">{{ settings.contact_form_title }}</h2>
+                        <p>{{ settings.contact_form_description }}</p>
+                    </div>
+
+                    <div class="col-sm-12 pad-min">
+
+                {% endif %}
+
+                <div class="col-sm-12">
+
+                    {% form 'contact' %}
+
+                        <input type="text" id="name" name="name" placeholder="Nombre">
+
+                        <input type="email" id="email" name="email" placeholder="Correo electrónico">
+
+                        <input type="tel" id="phone" name="phone" placeholder="Teléfono">
+
+                        <textarea id="mensaje" name="mensaje" placeholder="Mensaje"></textarea>
+
+                        <button type="submit" class="btn btn--outline">Enviar</button>
+
+                    {% endform %}
+
+                    {% if errors is not empty %}
+
+                      <div class="alert alert-danger fade in">
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+                        {% for message in errors %}
+
+                            <div>{{ message }}</div>
+
+                        {% endfor %}
+
+                      </div>
+
+                    {% endif %}
+
+                    {% if success is not empty %}
+
+                      <div class="alert alert-success fade in">
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+                        {% for message in success %}
+
+                            <div>{{ message }}</div>
+
+                        {% endfor %}
+
+                      </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% if settings.map_is_enabled %}
+
+    <script>
+
+        var map;
+        var address = "{{ settings.map_address }}";
+        var map_zoom = {{ settings.map_zoom }}
+
+        function initMap() {
+
+            var geocoder = new google.maps.Geocoder();
+
+            function codeAddress(address) {
+               geocoder.geocode( { 'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+                       var p_lat = (results[0].geometry.location.lat());
+                       var p_long = (results[0].geometry.location.lng());
+
+                       console.log(p_lat +'='+p_long);
+
+
+                       map = new google.maps.Map(document.getElementById('map'), {
+                            center: { lat: p_lat, lng: p_long },
+                            zoom: map_zoom,
+                            disableDefaultUI: true,
+                            styles:
+                                [{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#0060ff"},{"lightness":-100},{"visibility":"off"},{"saturation":"-77"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#848ea4"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#0060ff"},{"saturation":"-70"},{"lightness":"0"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"hue":"#0050ff"},{"saturation":"0"},{"lightness":"0"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"hue":"#0060ff"},{"saturation":"-80"},{"lightness":"-90"},{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"hue":"#0060ff"},{"saturation":"-80"},{"lightness":"-70"},{"visibility":"off"},{"gamma":"1"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#0060ff"},{"saturation":"-85"},{"lightness":"60"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels","stylers":[{"hue":"#0060ff"},{"saturation":"-70"},{"lightness":"50"},{"visibility":"off"}]},{"featureType":"road.local","elementType":"all","stylers":[{"hue":"#0060ff"},{"saturation":"0"},{"lightness":"-11"},{"visibility":"on"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"visibility":"simplified"},{"hue":"#0060ff"},{"lightness":"0"},{"saturation":"0"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#0060ff"},{"lightness":-100},{"visibility":"off"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#0066ff"},{"saturation":"0"},{"lightness":100},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"hue":"#000000"},{"saturation":-100},{"lightness":-100},{"visibility":"off"}]}]
+
+                        });
+
+                       $('.center-map').on('click', function(event){
+                        event.preventDefault();
+                            map.setCenter({ lat: p_lat, lng: p_long });
+                       });
+
+                       {% if ( settings.map_marker ) %}
+
+                           var marker = new google.maps.Marker({
+                                map: map,
+                                position: { lat: p_lat, lng: p_long },
+                                draggable: true,
+                                title: '{{ store_name }}'
+                            });
+
+                        {% endif %}
+
+                   } else {
+
+                        $('.contact__map').hide();
+                        $('.placeholder-help').show();
+
+                   }
+               });
+           }
+
+            codeAddress(address);
+
+        }
+
+
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ settings.map_api_key }}&signed_in=true&callback=initMap"
+                async defer></script>
+
+{% endif %}
+
+{% endblock body %}

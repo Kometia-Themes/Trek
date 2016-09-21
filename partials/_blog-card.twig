@@ -1,0 +1,70 @@
+{% if post.image_url is not empty and post.image_url is defined %}
+
+    {% set image_url = post.image_url ~ '?w=600&h=480' %}
+
+{% else %}
+
+    {% set image_url = 'default/placeholder.svg' | asset_url %}
+
+{% endif %}
+
+
+{% if side is not defined %}
+
+    {% set side = "left" %}
+
+{% endif %}
+
+
+<div class="blog-card">
+
+    <div class="row">
+
+        {% if side == 'left' %}
+
+            <div class="col-sm-6">
+
+                <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
+
+                    <img src="{{ image_url }} " alt="{{ post.name | escape }}" class="blog-card__img">
+
+                </a>
+
+            </div>
+
+            <div class="col-sm-6">
+                <h3 class="section-heading">{{ post.title }}</h3>
+                <p class="blog__item__excerpt">{{ post.summary }}</p>
+                <br/>
+                <a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}" class="btn btn--outline">Leer más</a>
+            </div>
+
+        {% else %}
+
+            <div class="col-sm-6 col-sm-push-6">
+
+                <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
+
+                    <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
+
+                        <img src="{{ image_url }} " alt="{{ post.name | escape }}" class="blog-card__img">
+
+                    </a>
+
+                </a>
+
+            </div>
+
+            <div class="col-sm-6 col-sm-pull-6">
+                <h3 class="section-heading">{{ post.title }}</h3>
+                <p class="blog__item__excerpt">{{ post.summary }}</p>
+                <br/>
+                <a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}" class="btn btn--outline">Leer más</a>
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>

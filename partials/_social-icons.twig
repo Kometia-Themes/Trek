@@ -1,0 +1,47 @@
+<div class="social-foo">
+    <ul>
+        {% if settings.instagram_link is not empty %}
+            <li>
+                <a href="{{ settings.instagram_link }}" target="_blank">
+                    <img src="{{ 'social/instagram.svg'| asset_url }}" alt="Instagram">
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.facebook_link is not empty %}
+            <li>
+                <a href="{{ settings.facebook_link }}" target="_blank">
+                    <img src="{{ 'social/facebook.svg'| asset_url }}" alt="Facebook">
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.twitter_link is not empty %}
+            <li>
+                <a href="{{ settings.twitter_link }}" target="_blank">
+                    <img src="{{ 'social/twitter.svg'| asset_url }}" alt="Twitter">
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.pinterest_link is not empty %}
+            <li>
+                <a href="{{ settings.pinterest_link }}" target="_blank">
+                    <img src="{{ 'social/pinterest.svg'| asset_url }}" alt="Pinterest">
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.google_link is not empty %}
+            <li>
+                <a href="{{ settings.google_link }}" target="_blank">
+                    <img src="{{ 'social/googleplus.svg'| asset_url }}" alt="G+">
+                </a>
+            </li>
+        {% endif %}
+
+        {% if settings.whatsapp_link is not empty %}
+            <li>
+                <a href="tel:{{ settings.whatsapp_link }}" target="_blank">
+                    <img src="{{ 'social/whatsapp.svg'| asset_url }}" alt="Whatsapp">
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

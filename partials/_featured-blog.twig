@@ -1,0 +1,92 @@
+{% if settings.featured_blog_is_enabled %}
+
+    {% if blogs[settings.featured_blog] is defined %}
+
+        {% set featured_blog = blogs[settings.featured_blog] %}
+
+        {% set limit = settings.featured_blog_limit is not empty ? min(0+settings.featured_blog_limit, 50) : 5 %}
+
+        <div class="featured-blog">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-sm-12 text-center">
+
+                        <h2 class="c-brand upper">{{ featured_blog.permalink }}</h2>
+
+                        <br/>
+
+                    </div>
+
+                    {% if featured_blog.posts | length > 0 %}
+
+                        {% for post in featured_blog.posts | slice(0, limit)  %}
+
+                            <div class="col-sm-12">
+
+                                {% if loop.index % 2 == 0 %}
+
+                                    {% include "_blog-card.twig" with {'side': 'right'} %}
+
+                                {% else %}
+
+                                    {% include "_blog-card.twig" %}
+
+                                {% endif %}
+
+                             </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        // sho placeholder
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="container">
+
+                <div class="row pad">
+
+                    <div class="col-sm-12">
+
+                        <div class="placeholder-help">
+
+                            <div class="placeholder-helper">
+
+                                <div class="placeholder-info">
+                                    <p>Todavía no hay un blog destacado seleccionado.</p>
+                                    <a href="/admin/blogs" class="btn btn-placeholder">Agregar blog</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+    {% endif %}
+
+{% endif %}
+
+
+
+
+<script>
+
+
+</script>

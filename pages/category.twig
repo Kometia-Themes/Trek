@@ -1,0 +1,119 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}
+    {{ category.title }}
+{% endblock main_title %}
+
+{% block body %}
+
+    <div class="categories pad">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-12 text-center">
+
+                    <h2 class="c-brand upper">
+
+                        {{ category.title }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-3 categories-filter">
+
+                    <div class="sidebar">
+
+                        <h4>Categorias</h4>
+                        <hr>
+
+                        <div class="categories__container">
+
+                            {% if categories | length > 0 %}
+
+                                {% for categoryElement in categories %}
+
+                                    {% include '_category_tree_item.twig' with {
+                                    'category' : categoryElement,
+                                    'current'  : category
+                                    } only %}
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                No hay subcategorías
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-9">
+
+                    <div class="row">
+
+                        <div class="featured-products">
+
+                            {% for product in products %}
+
+                                {% if loop.index <= 1 %}
+
+                                    <div class="col-sm-12">
+
+                                        {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="col-sm-6">
+
+                                        {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
+
+                                    </div>
+
+                                    {% if loop.index % 2 == 1 %}
+                                        <br style="clear: both;">
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="row text-center">
+                        {% include '_pagination.twig' %}
+                    </div>
+
+                </div>
+
+                <div class="col-sm-12 pad-min"></div>
+
+                <br class="clear">
+
+                <div class="col-sm-12 text-center">
+
+                    {% include '_pagination.twig' %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}

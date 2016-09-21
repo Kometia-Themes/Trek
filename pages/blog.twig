@@ -1,0 +1,83 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}
+    Blog
+{% endblock main_title %}
+
+{% block body %}
+
+    <div class="blog">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12 text-center">
+
+                    <div class="pad">
+
+                        <h2 class="c-brand upper">{{ blog.title }}</h2>
+                        <p>{{ blog.meta_description }}</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% if posts|length > 0 %}
+
+                {% for post in posts %}
+
+
+                    <div class="row post">
+
+                        <div class="col-sm-4">
+
+                            <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
+
+                              {% if product.image_url is not empty and product.image_url is defined %}
+
+                                <img src="{{ post.image_url }}?w=1180&h=500&fit=crop" alt="{{ post.name | escape }}" class="img-responsive">
+
+                              {% else %}
+
+                                <img src="/assets/default/placeholder.svg" alt="{{ post.name | escape }}" class="img-responsive">
+
+                              {% endif %}
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-sm-8">
+
+                            <h4 class="c-brand">{{ post.title }}</h4>
+                            <p>{{ post.summary }}</p>
+                            <br/>
+                            <a class="btn btn--outline" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">Leer más</a>
+
+                        </div>
+
+                        {% if loop.index % 1 == 0 %}
+                            <br style="clear: both;">
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+                <br/>
+                <br/>
+
+                <div class="row text-center">
+                    {% include '_pagination.twig' %}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock body %}

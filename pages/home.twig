@@ -1,0 +1,28 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    {% include "_slider.twig" %}
+
+    {% include "_newsletter.twig" %}
+
+    {% include "_featured-products.twig" %}
+
+    {% include "_instagram.twig" %}
+
+    {% include "_featured-advices.twig" %}
+
+    {% include "_main-banner.twig" %}
+
+    {% include "_featured-blog.twig" %}
+
+{% endblock body %}
+
+{% block body_js %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        slider_home();
+    </script>
+
+{% endblock body_js %}
