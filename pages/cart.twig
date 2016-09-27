@@ -1,229 +1,157 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-    Carrito de compras
-{% endblock main_title %}
-
 {% block body %}
-
-    <div class="shopping-cart pad">
-
-        <div class="container">
-
-            <div class="row">
-
-                <div class="col-sm-12 text-center">
-
-                    <h2 class="c-brand upper">{{ settings.cart_title }}</h2>
-                    <p>{{ settings.cart_description }}</p>
-
-                </div>
-
-                <div class="col-sm-12 pad-min"></div>
-
-            </div>
-
-                {% if cart.items|length > 0 %}
-
-                    <div class="shopping-cart__articles">
-
-                        <div class="row">
-
-                            <div class="col-sm-6 col-sm-offset-6 text-right total-data">
-
-                            <p><span class="bold">Total</span>: <span class="total">{{ cart.total_price | money('symbol', 'code') }}</span></p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="shopping-cart__articles border-none">
-
-                        <div class="row">
-
-                            <div class="col-sm-4">
-                                <a href="/productos" class="btn btn--outline full">{{ settings.cart_btn_more_text }}</a>
-                            </div>
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-4"><a href="/checkout" class="btn full">{{ settings.cart_btn_buy_text }}</a></div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="pad-min"></div>
-
-                    <div class="row titles text-center hidden-xs hidden-sm">
-
-                        <div class="col-sm-6">
-                            <p>Producto</p>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <p>Precio unitario</p>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <p>Cantidad</p>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <p>Subtotal</p>
-                        </div>
-
-                    </div>
-
-                    {% for item in cart.items %}
-
-
-                        {% if item.product.image_url is not empty and item.product.image_url is defined %}
-
-                            {% set image_url = item.product.image_url %}
-
-                        {% else %}
-
-                            {% set image_url = 'default/placeholder.svg' | asset_url %}
-
-                        {% endif %}
-
-                        <div class="shopping-cart__articles">
-
-                            <div class="row">
-
-                                <div class="col-md-2 col-sm-3 col-xs-3">
-
-                                    <a href="/productos/{{ item.product.permalink }}">
-
-                                        <img src="{{ image_url }}?w=400&h=400&fit=crop">
-
-                                    </a>
-
-                                </div>
-
-                                <div class="col-md-4 col-sm-9 col-xs-9">
-                                    <a href="/productos/{{ item.product.permalink }}">
-
-                                        <h4>{{ item.product.name }}</h4>
-
-                                    </a>
-
-                                  <p>En: <span class="bold">{{ item.sku.name }}</span></p>
-
-                                </div>
-
-                                <br class="clear visible-xs visible-sm">
-
-                                <div class="col-md-2 col-sm-4 col-xs-6 cen">
-
-                                    <label class="visible-sm visible-xs">Precio unitario</label>
-
-                                    <p class="product-price">{{ item.product.price | money('symbol', 'code') }}
-                                    <span class="cross-text product-price__compared">{{ item.sku.compared_price | money('symbol', 'code') }}</span></p>
-
-                                </div>
-
-                                <div class="col-md-2 col-sm-4 col-xs-6 cen">
-
-                                  <div class="buttons-action">
-
-                                    <label class="visible-sm visible-xs">Cantidad</label>
-
-                                    <form class="update" action="/carrito/actualizar" method="post">
-
-                                      <input type="hidden" name="_method" value="patch">
-                                      <input type="hidden" name="id" value="{{ item.id }}">
-                                      <input class="text-center" name="quantity" id="quantity" placeholder="Cantidad" autocomplete="off" value="{{ item.quantity }}">
-
-                                    </form>
-
-                                    <form class="delete" action="/carrito/eliminar" method="post">
-
-                                      <input type="hidden" name="_method" value="delete">
-                                      <input type="hidden" name="id" value="{{ item.id }}">
-                                      <input type="hidden" name="quantity" value="0">
-
-                                    </form>
-
-                                    <button type="button" class="btn btn--outline btn-update"><i class="fa fa-refresh"></i></button>
-                                    <button type="button" class="btn btn--outline btn-delete"><i class="fa fa-trash"></i></button>
-
-                                  </div>
-
-                                </div>
-
-                                <div class="col-md-2 col-sm-4 col-xs-12 cen">
-
-                                    {% set subtotal = item.product.price * item.quantity %}
-
-                                    <label class="visible-sm visible-xs">Subtotal</label>
-
-                                    <p class="subtotal-product">{{ subtotal | money('symbol', 'code') }}</p>
-
-                                </div>
-
-                                <br class="clear visible-xs visible-sm">
-
-                            </div>
-
-                        </div>
-
-                    {% endfor %}
-
-                    <div class="shopping-cart__articles">
-
-                        <div class="row">
-
-                            <div class="col-sm-6 col-sm-offset-6 text-right total-data">
-
-                            <p><span class="bold">Total</span>: <span class="total">{{ cart.total_price | money('symbol', 'code') }}</span></p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="shopping-cart__articles border-none">
-
-                        <div class="row">
-
-                            <div class="col-sm-4">
-                                <a href="/productos" class="btn btn--outline full">{{ settings.cart_btn_more_text }}</a>
-                            </div>
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-4"><a href="/checkout" class="btn full">{{ settings.cart_btn_buy_text }}</a></div>
-
-                        </div>
-
-                    </div>
-
-                {% else %}
-
-                    <div class="col-sm-12 text-center">
-
-                        <h3>No hay productos en tu carrito.</h3>
-                        <a class="btn btn--outline" href="/">Volver a inicio</a>
-                        <a class="btn" href="/productos">Ir a productos</a>
-
-                    </div>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
+<div class="shopping-cart pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2 class="c-brand upper">{{ settings.cart_title }}</h2>
+        <p>{{ settings.cart_description }}</p>
+      </div>
+      <div class="col-sm-12 pad-min"></div>
     </div>
 
-    <script>
-        $('.btn-update').on('click', function(event){
-            $(this).parent('.buttons-action').find('form.update').submit();
-        });
-        $('.btn-delete').on('click', function(event){
-            $(this).parent('.buttons-action').find('form.delete').submit();
-        });
-    </script>
+    {% if cart.items | length > 0 %}
+    <div class="shopping-cart__articles">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-6 text-right total-data">
+          <p><span class="bold">Total</span>: <span class="total">{{ cart.total_price | money('symbol', 'code') }}</span></p>
+        </div>
+      </div>
+    </div>
 
-{% endblock body %}
+    <div class="shopping-cart__articles border-none">
+      <div class="row">
+        <div class="col-sm-4">
+          <a href="/productos" class="btn btn--outline full">{{ settings.cart_btn_more_text }}</a>
+        </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"><a href="/checkout" class="btn full">{{ settings.cart_btn_buy_text }}</a></div>
+      </div>
+    </div>
+
+    <div class="pad-min"></div>
+
+    <div class="row titles text-center hidden-xs hidden-sm">
+      <div class="col-sm-6">
+        <p>Producto</p>
+      </div>
+      <div class="col-sm-2">
+        <p>Precio unitario</p>
+      </div>
+      <div class="col-sm-2">
+        <p>Cantidad</p>
+      </div>
+      <div class="col-sm-2">
+        <p>Subtotal</p>
+      </div>
+    </div>
+
+    {% for item in cart.items %}
+
+    {% if item.product.image_url is not empty and item.product.image_url is defined %}
+
+    {% set image_url = item.product.image_url %}
+
+    {% else %}
+
+    {% set image_url = 'default/placeholder.svg' | asset_url %}
+
+    {% endif %}
+
+    <div class="shopping-cart__articles">
+      <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-3">
+          <a href="/productos/{{ item.product.permalink }}">
+            <img src="{{ image_url }}?w=400&h=400&fit=crop">
+          </a>
+        </div>
+
+        <div class="col-md-4 col-sm-9 col-xs-9">
+          <a href="/productos/{{ item.product.permalink }}">
+            <h4>{{ item.product.name }}</h4>
+          </a>
+          <p>En: <span class="bold">{{ item.sku.name }}</span></p>
+        </div>
+
+        <br class="clear visible-xs visible-sm">
+
+        <div class="col-md-2 col-sm-4 col-xs-6 cen">
+          <label class="visible-sm visible-xs">Precio unitario</label>
+          <p class="product-price">{{ item.product.price | money('symbol', 'code') }}
+            <span class="cross-text product-price__compared">{{ item.sku.compared_price | money('symbol', 'code') }}</span></p>
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-6 cen">
+            <div class="buttons-action">
+              <label class="visible-sm visible-xs">Cantidad</label>
+              <form class="update" action="/carrito/actualizar" method="post">
+                <input type="hidden" name="_method" value="patch">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <input class="text-center" name="quantity" id="quantity" placeholder="Cantidad" autocomplete="off" value="{{ item.quantity }}">
+              </form>
+
+              <form class="delete" action="/carrito/eliminar" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <input type="hidden" name="quantity" value="0">
+              </form>
+
+              <button type="button" class="btn btn--outline btn-update"><i class="fa fa-refresh"></i></button>
+              <button type="button" class="btn btn--outline btn-delete"><i class="fa fa-trash"></i></button>
+            </div>
+          </div>
+
+          <div class="col-md-2 col-sm-4 col-xs-12 cen">
+            {% set subtotal = item.product.price * item.quantity %}
+            <label class="visible-sm visible-xs">Subtotal</label>
+            <p class="subtotal-product">{{ subtotal | money('symbol', 'code') }}</p>
+          </div>
+
+          <br class="clear visible-xs visible-sm">
+        </div>
+      </div>
+
+      {% endfor %}
+
+      <div class="shopping-cart__articles">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-6 text-right total-data">
+            <p><span class="bold">Total</span>: <span class="total">{{ cart.total_price | money('symbol', 'code') }}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="shopping-cart__articles border-none">
+        <div class="row">
+          <div class="col-sm-4">
+            <a href="/productos" class="btn btn--outline full">{{ settings.cart_btn_more_text }}</a>
+          </div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4"><a href="/checkout" class="btn full">{{ settings.cart_btn_buy_text }}</a></div>
+        </div>
+      </div>
+
+      {% else %}
+      <div class="col-sm-12 text-center">
+        <h3>No hay productos en tu carrito.</h3>
+        <a class="btn btn--outline" href="/">Volver a inicio</a>
+        <a class="btn" href="/productos">Ir a productos</a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $('.btn-update').on('click', function(event) {
+      $(this).parent('.buttons-action').find('form.update').submit();
+    });
+    $('.btn-delete').on('click', function(event) {
+      $(this).parent('.buttons-action').find('form.delete').submit();
+    });
+  });
+</script>
+
+{% endblock %}

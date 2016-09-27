@@ -1,154 +1,111 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-    Productos
-{% endblock main_title %}
-
 {% block body %}
+<div class="featured-products pad">
+  <div class="container">
+    {% if products | length > 0 %}
+    <div class="row">
+      <div class="col-sm-12 pad-min"></div>
 
-    <div class="featured-products pad">
+      {% if products.has_filters %}
 
-        <div class="container">
+      {% set col_size = 'col-md-9 col-sm-12 col-xs-12' %}
 
-            {% if products | length > 0 %}
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="sidebar">
 
-            <div class="row">
+          {% if products.filters.tags is defined %}
 
-                <div class="col-sm-12 pad-min"></div>
+          <h4>Etiquetas</h4>
 
-                {% if products.has_filters %}
+          {% for tag in products.filters.tags %}
 
-                    {% set col_size = 'col-md-9 col-sm-12 col-xs-12' %}
+          <input id="tag_{{ loop.index }}" type="checkbox" name="tags" value="{{ tag.permalink }}">
+          <label for="tag_{{ loop.index }}">{{ tag.title }}</label>
 
-                    <div class="col-md-3 col-sm-12 col-xs-12">
+          {% endfor %}
 
-                        <div class="sidebar">
+          {% endif %}
 
-                            {% if products.filters.tags is defined %}
+          {% if products.filters.variants is defined %}
 
-                                <h4>Etiquetas</h4>
+          {% for modifier, options in products.filters.variants %}
 
-                                {% for tag in products.filters.tags %}
+          <br/>
 
-                                    <input id="tag_{{ loop.index }}" type="checkbox" name="tags" value="{{ tag.permalink }}">
-                                    <label for="tag_{{ loop.index }}">{{ tag.title }}</label>
+          <h4>{{ modifier }}</h4>
 
-                                {% endfor %}
+          {% for option in options %}
 
-                            {% endif %}
+          <input id="{{ modifier }}_tag_{{ loop.index }}" type="checkbox" name="{{ modifier }}" value="{{ option }}">
+          <label for="{{ modifier }}_tag_{{ loop.index }}">{{ option }}</label>
 
-                            {% if products.filters.variants is defined %}
+          {% endfor %}
 
-                                {% for modifier, options in products.filters.variants %}
+          {% endfor %}
 
-                                    <br/>
-
-                                    <h4>{{ modifier }}</h4>
-
-                                    {% for option in options %}
-
-                                        <input id="{{ modifier }}_tag_{{ loop.index }}" type="checkbox" name="{{ modifier }}" value="{{ option }}">
-                                        <label for="{{ modifier }}_tag_{{ loop.index }}">{{ option }}</label>
-
-                                    {% endfor %}
-
-                                {% endfor %}
-
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-
-                {% else %}
-
-                    {% set col_size = 'col-sm-12' %}
-
-                {% endif %}
-
-                <div class="{{ col_size }}">
-
-                    <div class="featured-products">
-
-                        {% for product in products %}
-
-                            {% if loop.index <= 1 %}
-
-                                <div class="col-sm-12">
-
-                                    {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
-
-                                </div>
-
-                            {% else %}
-
-                                <div class="col-sm-6">
-
-                                    {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
-
-                                </div>
-
-                                {% if loop.index % 2 == 1 %}
-                                    <br style="clear: both;">
-                                {% endif %}
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                    </div>
-
-                </div>
-
-                <div class="col-sm-12 pad-min"></div>
-
-                <br class="clear">
-
-                <div class="col-sm-12 text-center">
-
-                    {% include '_pagination.twig' %}
-
-                </div>
-
-            </div>
-
-
-            {% else %}
-
-                <div class="row">
-
-                    <div class="col-sm-12">
-
-                        <div class="pad">
-
-                            <div class="placeholder-help">
-
-                                <div class="placeholder-helper">
-
-                                    <div class="placeholder-info">
-
-                                        <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
-                                        <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            {% endif %}
-
+          {% endif %}
         </div>
+      </div>
 
+      {% else %}
+
+      {% set col_size = 'col-sm-12' %}
+
+      {% endif %}
+
+      <div class="{{ col_size }}">
+        <div class="featured-products">
+          {% for product in products %}
+
+          {% if loop.index <= 1 %}
+
+          <div class="col-sm-12">
+            {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
+          </div>
+
+          {% else %}
+
+          <div class="col-sm-6">
+            {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
+          </div>
+
+          {% if loop.index % 2 == 1 %}
+          <br style="clear: both;">
+          {% endif %}
+
+          {% endif %}
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-sm-12 pad-min"></div>
+      <br class="clear">
+      <div class="col-sm-12 text-center">
+        {% include '_pagination.twig' %}
+      </div>
     </div>
 
+    {% else %}
 
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="pad">
+          <div class="placeholder-help">
+            <div class="placeholder-helper">
+              <div class="placeholder-info">
+                <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
+                <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    {% endif %}
+
+  </div>
+</div>
 {% endblock body %}

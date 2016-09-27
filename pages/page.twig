@@ -1,28 +1,16 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-    {{ page.title }}
-{% endblock main_title %}
-
 {% block body %}
-
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-
-        <h2 class="c-brand upper">{{ page.title | escape }}</h2>
-
-      </div>
-    </div>
-    <div class="row">
-
-      <div class="col-xs-12 page__content">
-
-        <p>{{ page.content }}</p>
-
-      </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="c-brand upper">{{ page.title | escape }}</h2>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-xs-12 page__content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
 {% endblock body %}
