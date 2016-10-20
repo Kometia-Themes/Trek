@@ -1,1 +1,1 @@
-# Tenue
+# Shoperti Trek Theme
