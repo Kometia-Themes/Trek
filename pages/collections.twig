@@ -1,94 +1,53 @@
 {% extends 'layout.twig' %}
 
 {% block main_title %}
-    Colecciones
+  Colecciones
 {% endblock main_title %}
 
 {% block body %}
-
-    {% if collections|length > 0 %}
-
-        <div class="collections pad">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-sm-12 text-center">
-
-                        <h2 class="c-brand upper">Colecciones</h2>
-
-                    </div>
-
-                    <div class="col-sm-12 pad-min"></div>
-
-                    <div class="collections__cards line">
-
-                        {% for collection in collections %}
-
-                            {% if collection.image_url is not empty and collection.image_url is defined %}
-
-                                {% set image_url = collection.image_url %}
-
-                            {% else %}
-
-                                    {% set image_url = 'default/placeholder.svg' | asset_url %}
-
-                            {% endif %}
-
-
-                            <div class="scol-5 scol--top">
-
-                                <a href="/colecciones/{{ collection.permalink }}">
-
-                                    <div class="collections__card proportional" style="background: url('{{ image_url }}');">                                    </div>
-                                    <p> {{ collection.title }}</p>
-
-                                </a>
-
-                            </div>
-
-                        {% endfor %}
-
-                    </div>
-
-                    <div class="row text-center">
-                        {% include '_pagination.twig' %}
-                    </div>
-
-                </div>
-
-            </div>
-
+{% if collections|length > 0 %}
+<div class="collections pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2 class="c-brand upper">Colecciones</h2>
+      </div>
+      <div class="col-sm-12 pad-min"></div>
+      <div class="collections__cards line">
+        {% for collection in collections %}
+          {% if collection.image_url is not empty and collection.image_url is defined %}
+            {% set image_url = collection.image_url %}
+          {% else %}
+            {% set image_url = 'default/placeholder.svg' | asset_url %}
+          {% endif %}
+          <div class="scol-5 scol--top">
+            <a href="/colecciones/{{ collection.permalink }}">
+              <div class="collections__card proportional" style="background: url('{{ image_url }}');">                                    </div>
+              <p> {{ collection.title }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="row text-center">
+        {% include '_pagination.twig' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="container">
+  <div class="row pad">
+    <div class="col-sm-12">
+      <div class="placeholder-help">
+        <div class="placeholder-helper">
+          <div class="placeholder-info">
+            <p>Todavía no existen colecciones, en cuanto añadas productos, éstas irán apareciendo aquí.</p>
+            <a href="/admin/collection" class="btn btn-placeholder">Agregar Colecciones</a>
+          </div>
         </div>
-
-    {% else %}
-
-        <div class="container">
-
-            <div class="row pad">
-
-                <div class="col-sm-12">
-
-                    <div class="placeholder-help">
-
-                        <div class="placeholder-helper">
-
-                            <div class="placeholder-info">
-                                <p>Todavía no existen colecciones, en cuanto añadas productos, éstas irán apareciendo aquí.</p>
-                                <a href="/admin/collection" class="btn btn-placeholder">Agregar Colecciones</a>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    {% endif %}
-
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock body %}

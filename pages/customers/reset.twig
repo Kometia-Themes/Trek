@@ -1,16 +1,14 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row page">
-            <div class="col-sm-12">
-                <h3 class="section-title title">{{ page.title }}</h3>
-            </div>
-
-            {{ include("_notifications.twig") }}
-            <div class="col-sm-12">
-                {% include "_reset-form.twig" %}
-            </div>
-        </div>
+<div class="container">
+  <div class="row page">
+    <div class="col-sm-12">
+      <h3 class="section-title title">{{ page.title }}</h3>
     </div>
+    <div class="col-sm-12">
+    {% include "_reset-form.twig" %}
+    </div>
+  </div>
+</div>
 {% endblock body %}

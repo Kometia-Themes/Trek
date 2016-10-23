@@ -12,7 +12,7 @@ html, body {
   color: {{ settings.body_font_color }};
   font-size: {{ settings.body_font_size }};
   background-color: {{ settings.body_background_color }};
-  font-family: {{ settings.base_font }};
+  font-family: {{ settings.base_font | remove('Google+') | replace({'+': ' '}) }};
   font-weight: {{ settings.base_font_weight }};
   height: 100%;
   margin: 0 auto;
@@ -43,8 +43,10 @@ h4,
 h5,
 h6 {
   color: {{ settings.headings_color }};
-  font-family: {{ settings.heading_font }};
-  margin: 0px 0px 10px 0px; }
+  font-family: {{ settings.heading_font | remove('Google+') | replace({'+': ' '}) }};
+  font-size: {{ settings.heading_font_size }}
+  margin: 0px 0px 10px 0px;
+  font-weight: {{ settings.heading_font_weight }}; }
   h1.upper,
   h2.upper,
   h3.upper,
@@ -230,6 +232,13 @@ label {
   font-size: 14px; }
 
 /* * * * * * * * */
+/* Recover form  */
+/* * * * * * * * */
+div.input-group.input-group-lg { width: 100%; }
+input#email.input-recover { width: 100%; }
+
+
+/* * * * * * * * */
 /* Global styles */
 /* * * * * * * * */
 /* [class*="col-"]{
@@ -250,7 +259,7 @@ label {
   cursor: not-allowed; }
 
 .head-font, .slider-home .slide-description .slide__title, .slider-home .slide-price .slide__title {
-  font-family: {{ settings.heading_font }}; }
+  font-family: {{ settings.heading_font | remove('Google+') | replace({'+': ' '}) }}; }
 
 .general-content {
   margin: 0px;
@@ -633,7 +642,7 @@ footer {
 /* Base Slider Start */
 /* * * * * * * * * * */
 .slick-loading .slick-list {
-  background: #fff url("../img/ajax-loader.gif") center center no-repeat; }
+  background: #fff url("{{ 'default/ajax-loader.gif' | asset_url }}") center center no-repeat; }
 
 /* Icons */
 @font-face {
@@ -879,7 +888,8 @@ footer {
     .slider-home .slide-description .slide__title, .slider-home .slide-price .slide__title {
       color: {{ settings.slide__title }};
       font-size: 36px;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      font-weight: {{ settings.heading_font_weight }}; }
     .slider-home .slide-description .slide__description, .slider-home .slide-price .slide__description {
       color: {{ settings.slide__description }};
       font-size: 15px; }
@@ -900,6 +910,22 @@ footer {
     bottom: 50px;
     max-width: 250px;
     right: 30px; }
+  .slide_1_title_color { color: {{ settings.slide_1_title_color }} !important; }
+  .slide_2_title_color { color: {{ settings.slide_2_title_color }} !important; }
+  .slide_3_title_color { color: {{ settings.slide_3_title_color }} !important; }
+  .slide_4_title_color { color: {{ settings.slide_4_title_color }} !important; }
+  .slide_1_description_color { color: {{ settings.slide_1_description_color }} !important; }
+  .slide_2_description_color { color: {{ settings.slide_2_description_color }} !important; }
+  .slide_3_description_color { color: {{ settings.slide_3_description_color }} !important; }
+  .slide_4_description_color { color: {{ settings.slide_4_description_color }} !important; }
+  .slide_1_price_text_color { color: {{ settings.slide_1_price_text_color }} !important; }
+  .slide_2_price_text_color { color: {{ settings.slide_2_price_text_color }} !important; }
+  .slide_3_price_text_color { color: {{ settings.slide_3_price_text_color }} !important; }
+  .slide_4_price_text_color { color: {{ settings.slide_4_price_text_color }} !important; }
+  .slide_1_discount_color { color: {{ settings.slide_1_discount_color }} !important; }
+  .slide_2_discount_color { color: {{ settings.slide_2_discount_color }} !important; }
+  .slide_3_discount_color { color: {{ settings.slide_3_discount_color }} !important; }
+  .slide_4_discount_color { color: {{ settings.slide_4_discount_color }} !important; }
 
 .main-product {
   background-position: center !important;
@@ -1022,6 +1048,8 @@ footer {
   height: 450px;
   padding: 50px 20px;
   position: relative; }
+  .main_banner_title_color { color: {{ settings.main_banner_title_color }} !important; }
+  .main_banner_desc_color {color: {{ settings.main_banner_desc_color }} !important; }
 
 /* * * * * * * * */
 /* Media Queries */
@@ -1164,9 +1192,11 @@ footer {
 .blog .blog__img__link {
   display: block;
   padding-bottom: 10px; }
-  .blog .blog__img__link img {
-    width: 100%; }
-
+.blog .blog__img__link img {
+  width: 100%; }
+img.blog__img {
+  max-width: 100% !important;
+}
 .blog .post {
   padding: 15px; }
 
@@ -1195,7 +1225,8 @@ footer {
       text-transform: uppercase; }
 
 .post h1 {
-  font-size: 26px; }
+  font-size: {{ settings.heading_font_size * 1.444}}; }
+
 
 .post .post__social-share {
   margin-top: -30px; }
