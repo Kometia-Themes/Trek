@@ -141,12 +141,6 @@
               "id": "slide__price_text",
               "label": "Precio",
               "default": "#303394"
-            },
-            {
-              "type": "color",
-              "id": "slide___discount",
-              "label": "Descuento",
-              "default": "#F02028"
             }
           ]
         }
@@ -920,18 +914,6 @@
               "info": "Ej. $400.00"
             },
             {
-              "type": "text",
-              "id": "slide_1_discount",
-              "label": "Descuento",
-              "info": "Ej. $595.00"
-            },
-            {
-              "type": "color",
-              "id": "slide_1_discount_color",
-              "label": "Color del precio",
-              "default": "#444444"
-            },
-            {
               "type": "checkbox",
               "id": "slide_1_btn_buy",
               "label": "Mostrar boton de acción"
@@ -1005,18 +987,6 @@
               "id": "slide_2_price",
               "label": "Precio",
               "info": "Ej. $400.00"
-            },
-            {
-              "type": "text",
-              "id": "slide_2_discount",
-              "label": "Descuento",
-              "info": "Ej. $595.00"
-            },
-            {
-              "type": "color",
-              "id": "slide_2_discount_color",
-              "label": "Color del precio",
-              "default": "#444444"
             },
             {
               "type": "checkbox",
@@ -1094,18 +1064,6 @@
               "info": "Ej. $400.00"
             },
             {
-              "type": "text",
-              "id": "slide_3_discount",
-              "label": "Descuento",
-              "info": "Ej. $595.00"
-            },
-            {
-              "type": "color",
-              "id": "slide_3_discount_color",
-              "label": "Color del precio",
-              "default": "#444444"
-            },
-            {
               "type": "checkbox",
               "id": "slide_3_btn_buy",
               "label": "Mostrar boton de acción"
@@ -1179,18 +1137,6 @@
               "id": "slide_4_price",
               "label": "Precio",
               "info": "Ej. $400.00"
-            },
-            {
-              "type": "text",
-              "id": "slide_4_discount",
-              "label": "Descuento",
-              "info": "Ej. $595.00"
-            },
-            {
-              "type": "color",
-              "id": "slide_4_discount_color",
-              "label": "Color del precio",
-              "default": "#444444"
             },
             {
               "type": "checkbox",
@@ -1376,12 +1322,12 @@
             {
               "type": "image",
               "id": "main_banner_background",
-              "label": "Imagen de banner"
+              "label": "Imagen de fondo"
             },
             {
               "type": "text",
               "id": "main_banner_title",
-              "label": "Titulo de banner"
+              "label": "Titulo"
             },
             {
               "type": "color",
@@ -1392,7 +1338,22 @@
             {
               "type": "text",
               "id": "main_banner_desc",
-              "label": "Descripción de banner"
+              "label": "Descripción"
+            },
+            {
+              "type": "select",
+              "id": "main_banner_desc_align",
+              "label": "Posición del texto",
+              "default": "right",
+              "options": [
+                {
+                  "value": "left",
+                  "label": "Izquierda"
+                },
+                {
+                  "value": "right",
+                  "label": "Derecha"
+                }]
             },
             {
               "type": "color",
@@ -1403,7 +1364,7 @@
             {
               "type": "checkbox",
               "id": "main_banner_btn",
-              "label": "Mostrar boton en banner"
+              "label": "Mostrar boton"
             },
             {
               "type": "text",

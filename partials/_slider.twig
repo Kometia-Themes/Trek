@@ -16,8 +16,9 @@
                   <p class="slide__title slide_{{i}}_title_color">{{ settings['slide_'~i~'_title'] }}</p>
                   <p class="slide__description slide_{{i}}_description_color">{{ settings['slide_'~i~'_description'] }}</p>
                 </div>
-                <div class="slide-price">
-                  <p class="slide-price__text slide_{{i}}_price_text_color">{{ settings['slide_'~i~'_price_text'] }}</p>
+                <div class="slide-price text-right">
+
+                  <p class="slide-price__text slide_{{i}}_price_text_color">{{ settings['slide_'~i~'_price_text'] }} {{ settings['slide_'~i~'_price'] }}</p>
                   {% if settings['slide_'~i~'_btn_buy'] %}
                   <a class="btn" href="{{ settings['slide_'~i~'_btn_buy_link'] }}">{{ settings['slide_'~i~'_btn_buy_text'] }}</a>
                   {% endif %}
