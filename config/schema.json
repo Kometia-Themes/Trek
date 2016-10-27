@@ -1158,7 +1158,7 @@
       ]
     },
     {
-      "name": "Página de Inicio - Productos",
+      "name": "Página de Inicio - Colección",
       "icon": "product-page",
       "sections": [
         {
@@ -1184,7 +1184,6 @@
       "icon": "home-page",
       "sections": [
         {
-          "header": "Instagram",
           "settings": [
             {
               "type": "text",
@@ -1224,7 +1223,7 @@
           ]
         },
         {
-          "header": "Tema 1",
+          "header": "Consejo 1",
           "settings": [
             {
               "type": "text",
@@ -1253,7 +1252,7 @@
           ]
         },
         {
-          "header": "Tema 2",
+          "header": "Consejo 2",
           "settings": [
             {
               "type": "text",
@@ -1282,7 +1281,7 @@
           ]
         },
         {
-          "header": "Tema 3",
+          "header": "Consejo 3",
           "settings": [
             {
               "type": "text",
@@ -1317,7 +1316,6 @@
       "icon": "home-page",
       "sections": [
         {
-          "header": "Banner",
           "settings": [
             {
               "type": "image",
@@ -1343,7 +1341,7 @@
             {
               "type": "select",
               "id": "main_banner_desc_align",
-              "label": "Posición del texto",
+              "label": "Posición del contenido",
               "default": "right",
               "options": [
                 {
@@ -1385,23 +1383,16 @@
       "icon": "home-page",
       "sections": [
         {
-          "header": "Blog principal",
           "settings": [
             {
               "type": "blog",
               "id": "featured_blog",
-              "label": "Blog"
+              "label": "Seleccionar blog"
             }
           ]
         },
         {
-          "header": "Página de inicio",
           "settings": [
-            {
-              "type": "checkbox",
-              "id": "featured_blog_is_enabled",
-              "label": "Mostrar blog principal"
-            },
             {
               "type": "checkbox",
               "id": "featured_blog_home_thumbnails_enabled",
@@ -1510,7 +1501,6 @@
       "icon": "shopping-cart",
       "sections": [
         {
-          "header": "Información",
           "settings": [
             {
               "type": "text",
@@ -1608,7 +1598,6 @@
       "icon": "social-networks",
       "sections": [
         {
-          "header": "Url",
           "settings": [
             {
               "type": "text",
