@@ -2,12 +2,6 @@
   {% set bg_placeholder = settings.main_banner_background %}
 {% endif %}
 
-{% if settings.main_banner_desc_align == 'right' %}
-  {% set align = 'col-md-4 col-sm-6 col-md-offset-8 col-sm-offset-6' %}
-{% else %}
-  {% set align = 'col-md-4 col-sm-6' %}
-{% endif %}
-
 {% if settings.main_banner %}
 <div class="main-banner pad">
   <div class="container">
@@ -17,7 +11,7 @@
           <div class="table">
             <div class="cell">
               <div class="row">
-                <div class="{{ align }}">
+                <div class="col-md-4 col-sm-6 {% if settings.main_banner_desc_align == 'right' %} col-md-offset-8 col-sm-offset-6 {% endif %}">
                   <h2 class="c-brand upper main_banner_title_color">{{ settings.main_banner_title}}</h2>
                   <p class="main_banner_desc_color">{{ settings.main_banner_desc }}</p>
                   {% if settings.main_banner_btn %}
