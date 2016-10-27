@@ -28,12 +28,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
   <link rel="stylesheet" href="{{ 'style.css' | asset_url }}" media="screen">
 
-  {% if 'Google' in settings.header_font %}
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.header_font | remove('Google+') }}:300,400,700">
-  {% endif %}
-  {% if 'Google' in settings.base_font and settings.base_font != settings.header_font %}
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font | remove('Google+') }}:300,400,700">
-  {% endif %}
+  {% include '_google-fonts.twig' %}
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,15 +44,15 @@
 
   <div class="general-container">
     {% include "_nav.twig" %}
+    {% include "_notifications.twig" %}
     {% block body %}{% endblock %}
   </div>
-
   <footer>
     {% include "_footer.twig" %}
   </footer>
 
   {% block body_js %}
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
   <script src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
   <script type="text/javascript" src="{{ 'app.js' | asset_url }}"></script>
   {% endblock %}

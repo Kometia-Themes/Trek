@@ -1,19 +1,23 @@
 {% extends 'layout.twig' %}
 
 {% block main_title %}
-    Login
+  Login
 {% endblock main_title %}
 
 {% block body %}
-    <div class="container">
-        <div class="row page">
-            <div class="col-sm-12">
-                <h3 class="section-title title">{{ page.title }}</h3>
-            </div>
-            {{ include("_notifications.twig") }}
-            <div class="col-sm-12">
-                {% include "_recover-form.twig" %}
-            </div>
+<div class="container page">
+  <div class="row">
+    <div class="pad">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+          <h2 class="page__title section-heading">Recuperar Contraseña</h2>
         </div>
     </div>
+  </div>
+    <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 page__content text-center">
+      <p>Debe proporcionar una correo ya registrado anteriormente.</p>
+    </div>
+  </div>
+  {% include "_recover-form.twig" %}
+</div>
 {% endblock body %}

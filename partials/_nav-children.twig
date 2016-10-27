@@ -1,13 +1,13 @@
 <li>
-    <a href="{{ menu_item.url }}" role="button" aria-haspopup="true" aria-expanded="false" class="submenu-link">
-        {{ menu_item.name }}
-    </a>
-    <a href="#" class="submenu-btn fa fa-chevron-down"></a>
-    {% if menu_item.children | length > 0 %}
-        <ul>
-        {% for child in menu_item.children %}
-            {% include "_nav-children.twig" with { 'menu_item' : child } %}
-        {% endfor %}
-       </ul>
-       {% endif %}
+  <a href="{{ menu_item.url }}" role="button" aria-haspopup="true" aria-expanded="false" class="submenu-link">
+  {{ menu_item.name }}
+  </a>
+  <a href="#" class="submenu-btn fa fa-chevron-down"></a>
+  {% if menu_item.children | length > 0 %}
+    <ul>
+    {% for child in menu_item.children %}
+      {% include "_nav-children.twig" with { 'menu_item' : child } %}
+    {% endfor %}
+   </ul>
+ {% endif %}
 </li>

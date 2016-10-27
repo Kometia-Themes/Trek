@@ -1,89 +1,40 @@
 {% if settings.featured_advices_is_enabled %}
+  {% set featured_advices = [] %}
+  {% for i in 1..3 %}
+    {% set featured_advice = 'featured_advice_' ~ i %}
+    {% set featured_advice_title = 'featured_advice_title_' ~ i %}
+    {% set featured_advice_desc  = 'featured_advice_desc_' ~ i %}
+    {% set featured_advice_img_url  = 'featured_advice_img_url_' ~ i %}
 
-
-    {% set featured_advices = [] %}
-
-    {% for i in 1..3 %}
-
-        {% set featured_advice = 'featured_advice_' ~ i %}
-        {% set featured_advice_title = 'featured_advice_title_' ~ i %}
-        {% set featured_advice_desc  = 'featured_advice_desc_' ~ i %}
-        {% set featured_advice_img_url  = 'featured_advice_img_url_' ~ i %}
-
-        {% if settings[featured_advice] is not empty and settings[featured_advice] is defined %}
-
-            {% set featured_advices = featured_advices | merge([ {
-
-            title : settings[ featured_advice_title ],
-            desc : settings[featured_advice_desc],
-            img_url : settings[featured_advice_img_url]
-
-            }]) %}
-
-        {% endif %}
-
-    {% endfor %}
-
-    {% if featured_advices | length > 0 %}
-
-        <div class="featured-advices pad">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-sm-12 text-center">
-
-                        <h2 class="c-brand upper">{{ settings.featured_section_advices_title }}</h2>
-
-                        <p>{{ settings.featured_section_advices_desc }}</p>
-
-                    </div>
-
-                    <div class="col-sm-12 pad"></div>
-
-                    {% if featured_advices | length == 1 %}
-
-                        {% include "_featured-advices-items.twig"
-                            with {
-                                'items': {
-                                1:featured_advices[0]},
-                                'quantity': 1 }
-                        only %}
-
-                    {% endif %}
-
-                    {% if featured_advices | length == 2 %}
-
-                        {% include "_featured-advices-items.twig"
-                            with {
-                                'items': {
-                                1:featured_advices[0],
-                                2:featured_advices[1]},
-                                'quantity': 2 }
-                        only %}
-
-                    {% endif %}
-
-                    {% if featured_advices | length == 3 %}
-
-                        {% include "_featured-advices-items.twig"
-                            with {
-                                'items': {
-                                1:featured_advices[0],
-                                2:featured_advices[1],
-                                3:featured_advices[2]},
-                                'quantity': 3 }
-                        only %}
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-        </div>
-
+    {% if settings[featured_advice] is not empty and settings[featured_advice] is defined %}
+      {% set featured_advices = featured_advices | merge([ {
+        title : settings[ featured_advice_title ],
+        desc : settings[featured_advice_desc],
+        img_url : settings[featured_advice_img_url]
+        }]) %}
     {% endif %}
+  {% endfor %}
 
+  {% if featured_advices | length > 0 %}
+  <div class="featured-advices pad">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h2 class="c-brand upper">{{ settings.featured_section_advices_title }}</h2>
+          <p>{{ settings.featured_section_advices_desc }}</p>
+        </div>
+        <div class="col-sm-12 pad"></div>
+        {% if featured_advices | length == 1 %}
+          {% include "_featured-advices-items.twig" with { 'items': { 1:featured_advices[0] }, 'quantity': 1 } only %}
+        {% endif %}
+        {% if featured_advices | length == 2 %}
+          {% include "_featured-advices-items.twig" with { 'items': { 1:featured_advices[0], 2:featured_advices[1] }, 'quantity': 2 } only %}
+        {% endif %}
+        {% if featured_advices | length == 3 %}
+          {% include "_featured-advices-items.twig" with { 'items': { 1:featured_advices[0], 2:featured_advices[1], 3:featured_advices[2] }, 'quantity': 3 } only %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
 {% endif %}

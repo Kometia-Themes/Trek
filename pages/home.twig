@@ -2,19 +2,33 @@
 
 {% block body %}
 
-{% include "_slider.twig" %}
+{% if settings.frontpage_section_1 is not empty and settings.frontpage_section_1 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_1 ~ '.twig' %}
+{% endif %}
 
-{% include "_newsletter.twig" %}
+{% if settings.frontpage_section_2 is not empty and settings.frontpage_section_2 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_2 ~ '.twig' %}
+{% endif %}
 
-{% include "_featured-products.twig" %}
+{% if settings.frontpage_section_3 is not empty and settings.frontpage_section_3 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_3 ~ '.twig' %}
+{% endif %}
 
-{% include "_instagram.twig" %}
+{% if settings.frontpage_section_4 is not empty and settings.frontpage_section_4 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_4 ~ '.twig' %}
+{% endif %}
 
-{% include "_featured-advices.twig" %}
+{% if settings.frontpage_section_5 is not empty and settings.frontpage_section_5 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_5 ~ '.twig' %}
+{% endif %}
 
-{% include "_main-banner.twig" %}
+{% if settings.frontpage_section_6 is not empty and settings.frontpage_section_6 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_6 ~ '.twig' %}
+{% endif %}
 
-{% include "_featured-blog.twig" %}
+{% if settings.frontpage_section_7 is not empty and settings.frontpage_section_7 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_7 ~ '.twig' %}
+{% endif %}
 
 {% endblock %}
 

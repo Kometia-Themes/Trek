@@ -1,0 +1,84 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+<div class="container page">
+  <div class="row">
+    <div class="pad">
+        <div class="col-sm-12">
+          <h2 class="page__title section-heading">Mi Cuenta</h2>
+            <a class="btn btn-link pull-right" href="/cuenta/logout">Cerrar sesión</a>
+          <p>Toda tu información está aquí.</p>
+        </div>
+    </div>
+  </div>
+  <hr>
+    <div class="row pad">
+      <div class="col-sm-4">
+        <h4>{{ customer.name }}</h4>
+        <p class="email">{{ customer.email }}</p>
+        {% if customer.address %}
+        <p>
+          {{ customer.address.address1 }}<br>
+
+          {% if customer.address.address2 != "" %}
+            {{ customer.address.address2 }}<br>
+          {% endif %}
+
+          {% if customer.address.city != "" %}
+            {{ customer.address.city }}
+          {% endif %}
+
+          {% if customer.address.state_code != "" %}
+            {{ customer.address.state_code | upper }}<br>
+          {% endif %}
+
+          {% if customer.address.postcode != "" %}
+            {{ customer.address.postcode | upper }}<br>
+          {% endif %}
+
+          {% if customer.address.country != "" %}
+            {{ customer.address.country }}<br>
+          {% endif %}
+
+          {% if customer.address.phone != "" %}
+            {{ customer.address.phone }}
+          {% endif %}
+          </p>
+
+        {% endif %}
+      </div>
+      <div class="col-sm-8">
+        <h4>Historial de órdenes</h4>
+        {% if customer.orders.count > 0 %}
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="order_number">No.</th>
+                <th class="date">Fecha</th>
+                <th class="payment_status">Estado de Pago</th>
+                <th class="fulfillment_status">Estado de Envio</th>
+                <th class="total">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+              <tr class="{% if order.cancelled %}cancelled_order{% endif %}">
+                <td><a href="/cuenta/orden/{{ order.id }}">{{ order.number }}</a></td>
+                <td>{{ order.created_at | datetime }}</td>
+                <td>{{ order.financial_status_label }}</td>
+                <td>{{ order.fulfillment_status_label }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+          No has realizado pedidos aún.
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

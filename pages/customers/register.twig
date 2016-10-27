@@ -1,23 +1,24 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <div class="container page">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2 class="page__title section-heading"> Crea una cuenta</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 page__content">
-                <p>Al registrarte con nosotros obtienes grandes beneficios.</p>
-                <p>Compra de manera rápida / Guarda diferentes direcciones / Consulta el status de tu pedido</p>
-            </div>
-        </div>
-        {{ include("_notifications.twig") }}
-        <div class="row">
-            <div class="col-xs-12">
-                {% include "_register-form.twig" %}
-            </div>
+<div class="container page">
+  <div class="row">
+    <div class="pad">
+        <div class="col-sm-8 col-sm-offset-2">
+          <h2 class="page__title section-heading">Crea una cuenta</h2>
         </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 page__content">
+      <p>Al registrarte con nosotros obtienes grandes beneficios.</p>
+      <p>Compra de manera rápida / Guarda diferentes direcciones / Consulta el status de tu pedido</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2" style="border-bottom: 1px solid #cecece;">
+    {% include "_register-form.twig" %}
+    </div>
+  </div>
+</div>
 {% endblock body %}

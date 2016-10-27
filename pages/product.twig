@@ -6,46 +6,29 @@
     <div class="row">
       <div class="col-md-6">
         {% if product.images | length == 0 %}
-
-        {% set product_image = 'default/placeholder.svg' | asset_url %}
-
+          {% set product_image = 'default/placeholder.svg' | asset_url %}
         {% else %}
-
-        {% set product_image = product.images | first %}
-        {% set product_image = product_image.url %}
-
+          {% set product_image = product.images | first %}
+          {% set product_image = product_image.url %}
         {% endif %}
-
         <div class="main-product">
           <img src="{{ product_image }}" alt="{{ product.name }}">
         </div>
-
         {% if product.images | length > 1 %}
-
         <div class="slider-product autoplay">
           {% for product_image in product.images %}
-
-          {% if product_image.url is not empty %}
-
-          {% set image_url = product_image.url %}
-
-          {% else %}
-
-          {% set image_url = 'default/placeholder.svg' | asset_url %}
-
-          {% endif %}
-
-          <div>
-            <img src="{{ image_url }}" alt="{{ product.name }}">
-          </div>
-
+            {% if product_image.url is not empty %}
+              {% set image_url = product_image.url %}
+            {% else %}
+              {% set image_url = 'default/placeholder.svg' | asset_url %}
+            {% endif %}
+            <div>
+              <img src="{{ image_url }}" alt="{{ product.name }}">
+            </div>
           {% endfor %}
-
         </div>
-
         {% endif %}
       </div>
-
       <div class="col-md-6">
         <div class="product-price-data">
           <form action="/carrito/agregar" method="post">
@@ -59,46 +42,29 @@
             <div>
               {% for attribute, attributeVariants in product.skus_modifiers %}
               <div class="form-group hide-product-{{ index }}">
-
                 {% set step = loop.index - 1 %}
-
                 {% for variant in attributeVariants %}
-
                 <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ loop.index0 }}">
                 <label for="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}">{{ variant }}</label>
-
                 {% endfor %}
-
               </div>
               {% endfor %}
             </div>
-
             {% endif %}
-
             {% if product.sku.compared_price > 0 %}
-
             <p class="product-price-data__text"><span class="product-price-data__discount-text">Ahorra</span> <span class="cross-text product-price__discount">{{ product.sku.compared_price | money('symbol', 'code') }}</span>
              <span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-
              {% else %}
-
              <p class="product-price-data__text"><span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-
              {% endif %}
-
-
              <div class="row">
-
               <br/>
-
               <div class="col-sm-12 quantity">
                 <p class="product-features">Cantidad</p>
               </div>
-
               <div class="col-sm-4 quantity">
                 <input class="text-center" name="quantity" id="quantity" placeholder="###" autocomplete="off">
               </div>
-
               <div class="col-sm-8">
                 {% if product.is_in_stock %}
                 {% set btn_text = 'Comprar ahora' %}
@@ -107,23 +73,15 @@
                 {% set btn_text = 'Agotado' %}
                 {% set btn_disabled = 'disabled' %}
                 {% endif %}
-
                 <button type="submit" class="btn full buy-now" {{ btn_disabled }}>{{ btn_text }}</button>
               </div>
-
             </div>
-
             <br/>
-
             <p class="product-features">Descripción</p>
             <p>{{ product.description }}</p>
-
           </form>
-
           <div class="product__social-share">
-
             <p class="product-features">Compartir</p>
-
             <ul>
               {% if settings.facebook_link is not empty %}
               <li>
@@ -153,181 +111,121 @@
                 </a>
               </li>
               {% endif %}
-
             </ul>
           </div>
-
         </div>
-
-
       </div>
-
     </div>
-
     {% if product.related_by_tags | length > 0 %}
-
     <div class="related-product">
-
       <div class="row">
-
         <div class="col-sm-12">
           <h2 class="c-brand upper text-center">Quizás también te interesen</h2>
           <div class="pad-min"></div>
         </div>
-
         {% set count = 1 %}
-
         {% for related_product in product.related_by_tags if count <= 3 %}
-
         <div class="col-sm-4 related-product__card">
-
           {% if related_product.image_url is not empty and related_product.image_url is defined %}
-
           {% set image_url = related_product.image_url %}
-
           {% else %}
-
           {% set image_url = 'default/placeholder.svg' | asset_url %}
-
           {% endif %}
-
-
           <a href="/productos/{{ related_product.permalink }}">
-
             <img src="{{ image_url }}" alt="{{ related_product.name }}">
           </a>
-
           <a href="/productos/{{ related_product.permalink }}">
-
             <h3>{{ related_product.name }}</h3>
-
             <div class="product-price-data">
               <p class="product-price-data__text">Ahorra <span class="cross-text product-price__discount">{{ related_product.sku.compared_price | money('symbol', 'code') }}</span>
                 <span class="product-price-data-price">{{ related_product.sku.price | money('symbol', 'code') }}</span></p>
               </div>
-
             </a>
-
           </div>
-
           {% set count = count + 1 %}
-
           {% endfor %}
-
         </div>
-
       </div>
-
       {% endif %}
-
     </div>
-
   </div>
+<script>
+{% if product.is_in_stock %}
+var skus = {{ product.skus | json }};
+showSelectedSku();
+function showSelectedSku() {
+        // only one sku, no variants to validate
+        if (skus.length == 1) {
+          return updateSkuControls(skus[0]);
+        }
+        // get the product variant modifiers from the selects
+        var selectedModifiers = [];
+        $("input[type='radio']:checked").each(function () {
+          selectedModifiers.push($(this).next('label').html());
+        });
+        var foundSku = null;
+        // check if there's an sku with the selected modifiers
+        skus.forEach(function (sku) {
+          var modifiers = sku.modifiers;
+          if ($(modifiers).not(selectedModifiers).length === 0
+            && $(selectedModifiers).not(modifiers).length === 0) {
+            foundSku = sku;
+          return false;
+        }
+      });
+        return updateSkuControls(foundSku);
+      }
 
-
-  <script>
-
-    {% if product.is_in_stock %}
-
-    var skus = {{ product.skus | json }};
-
-    showSelectedSku();
-
-    function showSelectedSku() {
-            // only one sku, no variants to validate
-
-            if (skus.length == 1) {
-              return updateSkuControls(skus[0]);
-            }
-
-            // get the product variant modifiers from the selects
-            var selectedModifiers = [];
-
-            $("input[type='radio']:checked").each(function () {
-              selectedModifiers.push($(this).next('label').html());
-            });
-
-            var foundSku = null;
-
-            // check if there's an sku with the selected modifiers
-            skus.forEach(function (sku) {
-
-              var modifiers = sku.modifiers;
-
-              if ($(modifiers).not(selectedModifiers).length === 0
-                && $(selectedModifiers).not(modifiers).length === 0) {
-
-                foundSku = sku;
-              return false;
-            }
-          });
-
-            return updateSkuControls(foundSku);
+      function updateSkuControls(sku) {
+        if (sku !== null) {
+          if (sku.stock_policy !== 'none' && sku.in_stock < 1) {
+            sku = null;
           }
+        }
 
-          function updateSkuControls(sku) {
+        if (sku !== null) {
+          $('input[name=sku_id]').val(sku.id);
+          $('.buy-now').attr('disabled',false);
+          $('.product-price-data-price').html(formatPrice(sku.price));
 
-            if (sku !== null) {
-
-              if (sku.stock_policy !== 'none' && sku.in_stock < 1) {
-
-                sku = null;
-              }
-            }
-
-            if (sku !== null) {
-
-              $('input[name=sku_id]').val(sku.id);
-              $('.buy-now').attr('disabled',false);
-              $('.product-price-data-price').html(formatPrice(sku.price));
-
-              if (sku.compared_price != 0) {
-                $('.product-price-data__discount-text').show();
-                $('.product-price__discount').html(formatPrice(sku.compared_price));
-              }
-              else {
-               $('.product-price__discount').html('');
-               $('.product-price-data__discount-text').hide();
-             }
-
-             if (sku.low_threshold != null && sku.in_stock <= sku.low_threshold) {
-              $('.quantity .product-features').append(' <sup class="low_threshold">(Últimas piezas)</sup>');
-            }
-            else{
-              $('.quantity .product-features').find('sup').remove();
-            }
+          if (sku.compared_price != 0) {
+            $('.product-price-data__discount-text').show();
+            $('.product-price__discount').html(formatPrice(sku.compared_price));
           }
           else {
-            $('.quantity .product-features').find('sup').remove();
-            $('.buy-now').attr('disabled',true);
-          }
+           $('.product-price__discount').html('');
+           $('.product-price-data__discount-text').hide();
+         }
 
-          return sku;
+         if (sku.low_threshold != null && sku.in_stock <= sku.low_threshold) {
+          $('.quantity .product-features').append(' <sup class="low_threshold">(Últimas piezas)</sup>');
         }
-
-        function formatPrice(price) {
-          price /= 100;
-          price = price.toFixed(2);
-          price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          return '$' + price + ' {{ store.currency }}';
+        else{
+          $('.quantity .product-features').find('sup').remove();
         }
+      }
+      else {
+        $('.quantity .product-features').find('sup').remove();
+        $('.buy-now').attr('disabled',true);
+      }
 
-        $('input:radio').change(function () {
+      return sku;
+    }
 
-          showSelectedSku();
+    function formatPrice(price) {
+      price /= 100;
+      price = price.toFixed(2);
+      price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return '$' + price + ' {{ store.currency }}';
+    }
 
-        });
-
-        {% endif %}
-
-        /* * * */
-
-        $(window).load(function(){
-
-          slider_product();
-
-        });
-
-      </script>
-
-      {% endblock body %}
+    $('input:radio').change(function () {
+      showSelectedSku();
+    });
+    {% endif %}
+    /* * * */
+    $(window).load(function(){
+      slider_product();
+    });
+  </script>
+{% endblock body %}

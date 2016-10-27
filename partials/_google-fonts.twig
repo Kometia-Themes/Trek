@@ -1,0 +1,6 @@
+{% if 'Google' in settings.heading_font %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.heading_font | remove('Google+') }}:300,400,500,700">
+{% endif %}
+{% if 'Google' in settings.base_font and settings.base_font != settings.heading_font %}
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font | remove('Google+') }}:300,400,500,700">
+{% endif %}

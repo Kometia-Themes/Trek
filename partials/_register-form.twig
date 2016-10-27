@@ -1,0 +1,20 @@
+{% form 'customer_register' 'role="form"' %}
+  <div class="form-group">
+    <input type="text" class="form-control input-lg" id="first_name" name="first_name" placeholder="Nombre" required>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control input-lg" id="last_name" name="last_name" placeholder="Apellido" required>
+  </div>
+  <div class="form-group">
+    <input type="email" class="form-control input-lg" id="email" name="email" placeholder="Correo electrónico" required>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Contraseña" required>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-lg btn-action">Crear cuenta</button>
+  </div>
+  <p>
+    <a href="/cuenta/login">Iniciar Sesión</a>
+  </p>
+{% endform %}

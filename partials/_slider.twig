@@ -1,52 +1,34 @@
 {% if settings.slide_1 or settings.slide_2 or settings.slide_3 or settings.slide_4 %}
-    <div class="silder-container silder-container--padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="slider-home single-item">
-                        {% for i in 1..4 %}
-
-                            {% if settings['slide_'~i~'_background'] is not empty and settings['slide_'~i~'_background'] is defined %}
-
-                                {% set img_url = settings['slide_'~i~'_background'] %}
-
-                            {% else %}
-
-                                {% set img_url = '/assets/default/placeholder.svg' %}
-
-                            {% endif %}
-
-                            {% set slide = 'slide_'~i %}
-
-                            {% if settings[slide] %}
-
-                                <div style="background-image: url({{ img_url }})">
-
-                                    <div class="slide-description">
-                                        <p class="slide__title">{{ settings['slide_'~i~'_title'] }}</p>
-                                        <p class="slide__description">{{ settings['slide_'~i~'_description'] }}</p>
-                                    </div>
-
-                                    <div class="slide-price">
-                                        <p class="slide-price__text">{{ settings['slide_'~i~'_price_text'] }} <span class="slide-price__text__discount">{{ settings['slide_'~i~'_discount'] }}</span>
-                                         {{ settings['slide_'~i~'_price'] }}</p>
-
-                                        {% if settings['slide_'~i~'_btn_buy'] %}
-
-                                            <a class="btn" href="{{ settings['slide_'~i~'_btn_buy_link'] }}">{{ settings['slide_'~i~'_btn_buy_text'] }}</a>
-
-                                        {% endif %}
-
-                                    </div>
-
-                                </div>
-
-                            {% endif %}
-
-                        {% endfor %}
-                    </div>
+<div class="silder-container silder-container--padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="slider-home single-item">
+          {% for i in 1..4 %}
+            {% set slide = 'slide_'~i %}
+            {% if settings[slide] %}
+              {% if settings['slide_'~i~'_background'] is not empty and settings['slide_'~i~'_background'] is defined %}
+                <div style="background-image: url({{ settings['slide_'~i~'_background'] }})">
+              {% else %}
+                <div>
+              {% endif %}
+                <div class="slide-description">
+                  <p class="slide__title slide_{{i}}_title_color">{{ settings['slide_'~i~'_title'] }}</p>
+                  <p class="slide__description slide_{{i}}_description_color">{{ settings['slide_'~i~'_description'] }}</p>
                 </div>
-            </div>
+                <div class="slide-price text-right">
+
+                  <p class="slide-price__text slide_{{i}}_price_text_color">{{ settings['slide_'~i~'_price_text'] }} {{ settings['slide_'~i~'_price'] }}</p>
+                  {% if settings['slide_'~i~'_btn_buy'] %}
+                  <a class="btn" href="{{ settings['slide_'~i~'_btn_buy_link'] }}">{{ settings['slide_'~i~'_btn_buy_text'] }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
+      </div>
     </div>
+  </div>
+</div>
 {% endif %}

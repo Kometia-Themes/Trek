@@ -1,27 +1,18 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-
-    <div class="container">
-
-        <div class="row page">
-
-            <div class="col-sm-12">
-
-                <h3 class="section-title title">{{ page.title }}</h3>
-
-            </div>
-
-            {% include '_activate-form.twig' %}
-
-            <div class="col-sm-12">
-
-                {% include "_activate-form.twig" %}
-
-            </div>
-
+<div class="container page">
+  <div class="row">
+    <div class="pad">
+        <div class="col-sm-8 col-sm-offset-2">
+          <h2 class="page__title section-heading">Activar cuenta</h2>
         </div>
-
     </div>
-
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2" style="border-bottom: 1px solid #cecece;">
+    {% include '_activate-form.twig' %}
+    </div>
+  </div>
+</div>
 {% endblock body %}
