@@ -1600,7 +1600,7 @@
         {
           "settings": [
             {
-              "type": "text",
+              "type": "page",
               "id": "policy_url",
               "label": "Ubicación del aviso de privacidad"
             }
