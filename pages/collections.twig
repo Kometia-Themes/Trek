@@ -1,37 +1,43 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-  Colecciones
-{% endblock main_title %}
-
 {% block body %}
-{% if collections|length > 0 %}
-<div class="collections pad">
+
+{% if collections | length > 0 %}
+<div class="collections">
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 text-center">
-        <h2 class="c-brand upper">Colecciones</h2>
+      <div class="col-xs-12 c-brand-h">
+        <h1 class="c-brand upper">{{ page_title }}</h1>
       </div>
-      <div class="col-sm-12 pad-min"></div>
-      <div class="collections__cards line">
-        {% for collection in collections %}
-          {% if collection.image_url is not empty and collection.image_url is defined %}
-            {% set image_url = collection.image_url %}
-          {% else %}
-            {% set image_url = 'default/placeholder.svg' | asset_url %}
-          {% endif %}
-          <div class="scol-5 scol--top">
-            <a href="/colecciones/{{ collection.permalink }}">
-              <div class="collections__card proportional" style="background: url('{{ image_url }}');">                                    </div>
-              <p> {{ collection.title }}</p>
-            </a>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 collections__cards">
+        {% for collections_row in collections | batch(4) %}
+          <div class="row">
+          {% for collection in collections_row %}
+            {% if collection.image_url is not empty and collection.image_url is defined %}
+              {% set image_url = collection.image_url %}
+            {% else %}
+              {% set image_url = 'placeholders/product-11.jpg' | global_img_url %}
+            {% endif %}
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <a href="/colecciones/{{ collection.permalink }}">
+                <div class="collections__card proportional" style="background: url('{{ image_url }}');"></div>
+                <div class="collections__cards--title text-center">
+                  <h3>
+                    <a href="/colecciones/{{ collection.permalink }}">
+                      {{ collection.title }}
+                    </a>
+                  </h3>
+                </div>
+              </a>
+            </div>
+           {% endfor %}
           </div>
         {% endfor %}
       </div>
-      <div class="row text-center">
-        {% include '_pagination.twig' %}
-      </div>
     </div>
+    {% include '_pagination.twig' %}
   </div>
 </div>
 {% else %}
@@ -50,4 +56,5 @@
   </div>
 </div>
 {% endif %}
-{% endblock body %}
+
+{% endblock %}

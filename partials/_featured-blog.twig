@@ -1,14 +1,15 @@
 {% if settings.featured_blog_is_enabled %}
   {% if blogs[settings.featured_blog] is defined %}
     {% set featured_blog = blogs[settings.featured_blog] %}
-    {% set limit = settings.featured_blog_limit is not empty ? min(0+settings.featured_blog_limit, 50) : 5 %}
+    {% set limit = settings.featured_blog_limit is not empty ? min(0 + settings.featured_blog_limit, 50) : 5 %}
     <div class="featured-blog">
       <div class="container">
         <div class="row">
-          <div class="col-sm-12 text-center">
-            <h2 class="c-brand upper">{{ featured_blog.title }}</h2>
-            <br/>
+          <div class="col-sm-12 c-brand-h">
+            <h2 class="c-brand upper">{{ settings.featured_blog_title }}</h2>
           </div>
+        </div>
+        <div class="row">
           {% if featured_blog.posts | length > 0 %}
               {% for post in featured_blog.posts | slice(0, limit)  %}
               <div class="col-sm-12">

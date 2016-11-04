@@ -20,8 +20,13 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12 text-center">
+          {% if settings.featured_section_advices_title is not empty %}
           <h2 class="c-brand upper">{{ settings.featured_section_advices_title }}</h2>
+          {% endif %}
+
+          {% if settings.featured_section_advices_desc is not empty %}
           <p>{{ settings.featured_section_advices_desc }}</p>
+          {% endif %}
         </div>
         <div class="col-sm-12 pad"></div>
         {% if featured_advices | length == 1 %}

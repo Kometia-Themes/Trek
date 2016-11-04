@@ -3,75 +3,44 @@
 {% block body %}
 <div class="featured-products pad">
   <div class="container">
-    {% if products | length > 0 %}
     <div class="row">
-      <div class="col-sm-12 pad-min"></div>
-      {% if products.has_filters %}
-        {% set col_size = 'col-md-9 col-sm-12 col-xs-12' %}
-      <div class="col-md-3 col-sm-12 col-xs-12">
-        <div class="sidebar">
-          {% if products.filters.tags is defined %}
-          <h4>Etiquetas</h4>
-            {% for tag in products.filters.tags %}
-            <input id="tag_{{ loop.index }}" type="checkbox" name="tags" value="{{ tag.permalink }}">
-            <label for="tag_{{ loop.index }}">{{ tag.title }}</label>
-            {% endfor %}
-          {% endif %}
-          {% if products.filters.variants is defined %}
-            {% for modifier, options in products.filters.variants %}
-            <br/>
-            <h4>{{ modifier }}</h4>
-            {% for option in options %}
-            <input id="{{ modifier }}_tag_{{ loop.index }}" type="checkbox" name="{{ modifier }}" value="{{ option }}">
-            <label for="{{ modifier }}_tag_{{ loop.index }}">{{ option }}</label>
-            {% endfor %}
-          {% endfor %}
-          {% endif %}
-        </div>
-      </div>
-      {% else %}
-        {% set col_size = 'col-sm-12' %}
-      {% endif %}
-      <div class="{{ col_size }}">
-        <div class="featured-products">
-          {% for product in products %}
-            {% if loop.index <= 1 %}
-            <div class="col-sm-12">
-              {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
-            </div>
-            {% else %}
-            <div class="col-sm-6">
-              {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
-            </div>
-              {% if loop.index % 2 == 1 %}
-              <br style="clear: both;">
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-      <div class="col-sm-12 pad-min"></div>
-      <br class="clear">
-      <div class="col-sm-12 text-center">
-        {% include '_pagination.twig' %}
+      <div class="col-xs-12 c-brand-h">
+        <h1 class="c-brand upper">Productos</h1>
       </div>
     </div>
-    {% else %}
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="pad">
-          <div class="placeholder-help">
-            <div class="placeholder-helper">
-              <div class="placeholder-info">
-                <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
-                <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
+    {% if products.count == 0 %}
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pad">
+            <div class="placeholder-help">
+              <div class="placeholder-helper">
+                <div class="placeholder-info">
+                  <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
+                  <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    {% else %}
+      <div class="row">
+        <div class="col-xs-12 featured-products">
+          {% for products_row in products | batch(4) %}
+          <div class="row">
+            {% for product in products_row %}
+              <div class="col-xs-12 col-sm-6 col-md-3">
+                {% include "_product-card.twig" %}
+              </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% include '_pagination.twig' %}
+
     {% endif %}
   </div>
 </div>
-{% endblock body %}
+{% endblock %}

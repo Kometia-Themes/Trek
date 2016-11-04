@@ -1,14 +1,28 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-<div class="container">
-  <div class="row page">
-    <div class="col-sm-12">
-      <h3 class="section-title title">{{ page.title }}</h3>
+<div class="container page">
+  <div class="row">
+    <div class="col-xs-12 c-brand-h">
+      <h1 class="c-brand upper">Restablecer Contraseña</h1>
     </div>
-    <div class="col-sm-12">
-    {% include "_reset-form.twig" %}
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+    {% form 'customer_reset_password' 'role="form"' %}
+      <div class="form-group">
+        <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Nueva Contraseña" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control input-lg" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-lg btn-action">Restablecer</button>
+      </div>
+      <input type="hidden" name="token" value="{{ token }}">
+      <input type="hidden" name="email" value="{{ email }}">
+    {% endform %}
     </div>
   </div>
 </div>
-{% endblock body %}
+{% endblock %}

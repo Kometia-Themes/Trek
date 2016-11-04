@@ -3,12 +3,9 @@
 {% block body %}
 <div class="container page">
   <div class="row">
-    <div class="pad">
-        <div class="col-sm-12">
-          <h2 class="page__title section-heading">Mi Cuenta</h2>
-            <a class="btn btn-link pull-right" href="/cuenta/logout">Cerrar sesión</a>
-          <p>Toda tu información está aquí.</p>
-        </div>
+    <div class="col-sm-12">
+      <h1 class="c-brand upper">Mi Cuenta</h1>
+      <p>Toda tu información está aquí.</p>
     </div>
   </div>
   <hr>
@@ -17,33 +14,31 @@
         <h4>{{ customer.name }}</h4>
         <p class="email">{{ customer.email }}</p>
         {% if customer.address %}
-        <p>
-          {{ customer.address.address1 }}<br>
+        {{ customer.address.address1 }}<br>
 
-          {% if customer.address.address2 != "" %}
+          {% if customer.address.address2 is not empty %}
             {{ customer.address.address2 }}<br>
           {% endif %}
 
-          {% if customer.address.city != "" %}
+          {% if customer.address.city is not empty %}
             {{ customer.address.city }}
           {% endif %}
 
-          {% if customer.address.state_code != "" %}
+          {% if customer.address.state_code is not empty %}
             {{ customer.address.state_code | upper }}<br>
           {% endif %}
 
-          {% if customer.address.postcode != "" %}
+          {% if customer.address.postcode is not empty %}
             {{ customer.address.postcode | upper }}<br>
           {% endif %}
 
-          {% if customer.address.country != "" %}
+          {% if customer.address.country is not empty %}
             {{ customer.address.country }}<br>
           {% endif %}
 
-          {% if customer.address.phone != "" %}
+          {% if customer.address.phone is not empty %}
             {{ customer.address.phone }}
           {% endif %}
-          </p>
 
         {% endif %}
       </div>

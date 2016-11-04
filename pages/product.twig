@@ -4,228 +4,157 @@
 <div class="product-single pad">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
-        {% if product.images | length == 0 %}
-          {% set product_image = 'default/placeholder.svg' | asset_url %}
-        {% else %}
-          {% set product_image = product.images | first %}
-          {% set product_image = product_image.url %}
-        {% endif %}
+      <div class="col-sm-6">
         <div class="main-product">
-          <img src="{{ product_image }}" alt="{{ product.name }}">
+        {% if product.images | length == 0 %}
+        <img src="{{ 'placeholders/product-15.jpg' | global_img_url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        {% endif %}
         </div>
         {% if product.images | length > 1 %}
         <div class="slider-product autoplay">
-          {% for product_image in product.images %}
-            {% if product_image.url is not empty %}
-              {% set image_url = product_image.url %}
-            {% else %}
-              {% set image_url = 'default/placeholder.svg' | asset_url %}
-            {% endif %}
-            <div>
-              <img src="{{ image_url }}" alt="{{ product.name }}">
-            </div>
+          {% for thumbnail in product.images %}
+          <div>
+            <img src="{{ thumbnail.url }}" alt="{{ product.name }}">
+          </div>
           {% endfor %}
         </div>
         {% endif %}
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <div class="product-price-data">
           <form action="/carrito/agregar" method="post">
-            <input type="hidden" name="sku_id" value="{{ product.sku.id }}">
+            <input type="hidden" name="sku_id" id="js-sku-id" value="{{ product.sku.id }}">
             <h2 class="product-card-data__name">{{ product.name }}</h2>
+            {% if product.sku.code is not empty %}
             <p class="product-features">SKU</p>
             <p class="bold bold--light upper">{{ product.sku.code }}</p>
             <br/>
+            {% endif %}
+
+            {% if product.sku.compared_price > 0 %}
+            <p class="product-price-data__text" id="js-price-preview"><del>{{ product.sku.compared_price | money('symbol', 'code') }}</del><br><span class="product-price-data-price product-price__discount">{{ product.sku.price | money('symbol', 'code') }}</span>
+            </p>
+            {% else %}
+            <p class="product-price-data__text" id="js-price-preview">
+              <span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span>
+            </p>
+            {% endif %}
+
             {% if product.skus_modifiers | length > 0 %}
             <p class="product-features hide-product-{{ index }}">Disponible en</p>
             <div>
-              {% for attribute, attributeVariants in product.skus_modifiers %}
+              {% for attribute, attribute_variants in product.skus_modifiers %}
               <div class="form-group hide-product-{{ index }}">
                 {% set step = loop.index - 1 %}
-                {% for variant in attributeVariants %}
-                <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ loop.index0 }}">
+                {% for variant in attribute_variants %}
+                <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ variant }}" class="sku-selectors">
                 <label for="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}">{{ variant }}</label>
                 {% endfor %}
               </div>
               {% endfor %}
             </div>
             {% endif %}
-            {% if product.sku.compared_price > 0 %}
-            <p class="product-price-data__text"><span class="product-price-data__discount-text">Ahorra</span> <span class="cross-text product-price__discount">{{ product.sku.compared_price | money('symbol', 'code') }}</span>
-             <span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-             {% else %}
-             <p class="product-price-data__text"><span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-             {% endif %}
-             <div class="row">
+
+            <div class="row">
               <br/>
               <div class="col-sm-12 quantity">
                 <p class="product-features">Cantidad</p>
               </div>
               <div class="col-sm-4 quantity">
-                <input class="text-center" name="quantity" id="quantity" placeholder="###" autocomplete="off">
+                <input type="text" class="text-center" name="quantity" id="quantity" placeholder="###" autocomplete="off">
               </div>
               <div class="col-sm-8">
                 {% if product.is_in_stock %}
                 {% set btn_text = 'Comprar ahora' %}
                 {% set btn_disabled = '' %}
                 {% else %}
-                {% set btn_text = 'Agotado' %}
+                {% set btn_text = 'No disponible' %}
                 {% set btn_disabled = 'disabled' %}
                 {% endif %}
-                <button type="submit" class="btn full buy-now" {{ btn_disabled }}>{{ btn_text }}</button>
+                <button type="submit" class="btn full buy-now" id="js-add-to-cart" {{ btn_disabled }}>{{ btn_text }}</button>
               </div>
             </div>
+
+            {% if product.description is not empty %}
             <br/>
             <p class="product-features">Descripción</p>
-            <p>{{ product.description }}</p>
+            {{ product.description }}
+            {% endif %}
           </form>
+          {% if settings.enable_share_products %}
           <div class="product__social-share">
             <p class="product-features">Compartir</p>
-            <ul>
-              {% if settings.facebook_link is not empty %}
-              <li>
-                <a href="http://www.facebook.com/share.php?u={{ canonical_url }}&title={{ product.name }}" target="_blank">
-                  <img src="{{ 'social/facebook.svg'| asset_url }}" alt="Facebook">
-                </a>
-              </li>
-              {% endif %}
-              {% if settings.twitter_link is not empty %}
-              <li>
-                <a href="http://twitter.com/intent/tweet?status={{ product.name }}+{{ canonical_url }}" target="_blank">
-                  <img src="{{ 'social/twitter.svg'| asset_url }}" alt="Twitter">
-                </a>
-              </li>
-              {% endif %}
-              {% if settings.pinterest_link is not empty %}
-              <li>
-                <a href="http://pinterest.com/pin/create/bookmarklet/?media={{ product.image_url }}&url={{ canonical_url }}&is_video=false&description={{ product.name }}" target="_blank">
-                  <img src="{{ 'social/pinterest.svg'| asset_url }}" alt="Pinterest">
-                </a>
-              </li>
-              {% endif %}
-              {% if settings.google_link is not empty %}
-              <li>
-                <a href="https://plus.google.com/share?url={{ canonical_url }}" target="_blank">
-                  <img src="{{ 'social/googleplus.svg'| asset_url }}" alt="G+">
-                </a>
-              </li>
-              {% endif %}
-            </ul>
+            {% include '_social-share.twig' %}
           </div>
-        </div>
-      </div>
-    </div>
-    {% if product.related_by_tags | length > 0 %}
-    <div class="related-product">
-      <div class="row">
-        <div class="col-sm-12">
-          <h2 class="c-brand upper text-center">Quizás también te interesen</h2>
-          <div class="pad-min"></div>
-        </div>
-        {% set count = 1 %}
-        {% for related_product in product.related_by_tags if count <= 3 %}
-        <div class="col-sm-4 related-product__card">
-          {% if related_product.image_url is not empty and related_product.image_url is defined %}
-          {% set image_url = related_product.image_url %}
-          {% else %}
-          {% set image_url = 'default/placeholder.svg' | asset_url %}
           {% endif %}
-          <a href="/productos/{{ related_product.permalink }}">
-            <img src="{{ image_url }}" alt="{{ related_product.name }}">
-          </a>
-          <a href="/productos/{{ related_product.permalink }}">
-            <h3>{{ related_product.name }}</h3>
-            <div class="product-price-data">
-              <p class="product-price-data__text">Ahorra <span class="cross-text product-price__discount">{{ related_product.sku.compared_price | money('symbol', 'code') }}</span>
-                <span class="product-price-data-price">{{ related_product.sku.price | money('symbol', 'code') }}</span></p>
-              </div>
-            </a>
-          </div>
-          {% set count = count + 1 %}
-          {% endfor %}
         </div>
       </div>
-      {% endif %}
     </div>
   </div>
-<script>
+</div>
+{% endblock %}
+
+{% block body_js %}
+{{ parent() }}
+
+<script type="text/javascript">
+  $(window).load(function(){
+    slider_product();
+  });
+</script>
+
 {% if product.is_in_stock %}
-var skus = {{ product.skus | json }};
-showSelectedSku();
-function showSelectedSku() {
-        // only one sku, no variants to validate
-        if (skus.length == 1) {
-          return updateSkuControls(skus[0]);
-        }
-        // get the product variant modifiers from the selects
-        var selectedModifiers = [];
-        $("input[type='radio']:checked").each(function () {
-          selectedModifiers.push($(this).next('label').html());
-        });
-        var foundSku = null;
-        // check if there's an sku with the selected modifiers
-        skus.forEach(function (sku) {
-          var modifiers = sku.modifiers;
-          if ($(modifiers).not(selectedModifiers).length === 0
-            && $(selectedModifiers).not(modifiers).length === 0) {
-            foundSku = sku;
-          return false;
-        }
-      });
-        return updateSkuControls(foundSku);
-      }
+{{ 'sku-select/v1/sku-select.min.js' | global_asset_url | script_tag }}
+<script>
+  var formatMoney = function(price) {
+    var formatPrice = price /= 100;
 
-      function updateSkuControls(sku) {
-        if (sku !== null) {
-          if (sku.stock_policy !== 'none' && sku.in_stock < 1) {
-            sku = null;
+    formatPrice = formatPrice.toFixed(2);
+    formatPrice = formatPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    return '$ ' + formatPrice + ' {{ store.currency }}';
+  }
+
+  $(document).ready(function () {
+    var firstLoad = true;
+
+    new Shoperti.SkuSelect({
+      selector: 'sku-selectors',
+      skus: {{ product.skus | json }},
+      inputType: 'radio'
+    }, function(sku) {
+      if (sku && !(sku.stock_policy !== 'none' && sku.in_stock < 1)) {
+        jQuery('#js-sku-id').val(sku.id);
+        jQuery('#js-add-to-cart').removeClass('disabled').removeAttr('disabled', 'disabled')
+        if (sku.price < sku.compared_price) {
+          jQuery('#js-price-preview').html("<del>" + formatMoney(sku.compared_price) + "</del><br><span class=\"product-price-data-price product-price__discount\">" + formatMoney(sku.price) + "</span>");
+        } else {
+          jQuery('#js-price-preview').html("<span class=\"product-price-data-price\">" + formatMoney(sku.price) + "</span>");
+        }
+        var image = sku.image_url;
+        if (!firstLoad) {
+          {% if settings.enable_product_image_zoom %}
+          var ez = $('#zoom').data('elevateZoom');
+          if (ez.getCurrentImage() != image) {
+            ez.swaptheimage(image, image);
           }
-        }
-
-        if (sku !== null) {
-          $('input[name=sku_id]').val(sku.id);
-          $('.buy-now').attr('disabled',false);
-          $('.product-price-data-price').html(formatPrice(sku.price));
-
-          if (sku.compared_price != 0) {
-            $('.product-price-data__discount-text').show();
-            $('.product-price__discount').html(formatPrice(sku.compared_price));
+          {% else %}
+          var ez = $('#zoom');
+          if (ez.attr('src') != image) {
+            ez.attr("src", image);
           }
-          else {
-           $('.product-price__discount').html('');
-           $('.product-price-data__discount-text').hide();
-         }
-
-         if (sku.low_threshold != null && sku.in_stock <= sku.low_threshold) {
-          $('.quantity .product-features').append(' <sup class="low_threshold">(Últimas piezas)</sup>');
+          {% endif %}
         }
-        else{
-          $('.quantity .product-features').find('sup').remove();
-        }
+        firstLoad = false;
+      } else {
+        jQuery('#js-add-to-cart').addClass('disabled').attr('disabled', 'disabled')
+        jQuery('#js-price-preview').html('No disponible');
       }
-      else {
-        $('.quantity .product-features').find('sup').remove();
-        $('.buy-now').attr('disabled',true);
-      }
-
-      return sku;
-    }
-
-    function formatPrice(price) {
-      price /= 100;
-      price = price.toFixed(2);
-      price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return '$' + price + ' {{ store.currency }}';
-    }
-
-    $('input:radio').change(function () {
-      showSelectedSku();
     });
-    {% endif %}
-    /* * * */
-    $(window).load(function(){
-      slider_product();
-    });
-  </script>
-{% endblock body %}
+  });
+</script>
+{% endif %}
+
+{% endblock %}

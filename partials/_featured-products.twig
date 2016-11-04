@@ -1,6 +1,5 @@
 {% if settings.featured_products_limit > 0 %}
   {% if settings.show_featured_products %}
-  {% set featured_products = [] %}
     {% if settings.featured_products_collection is not empty and collections[settings.featured_products_collection]is defined %}
     {% set featured_products = collections[settings.featured_products_collection].products %}
     {% endif %}
@@ -8,6 +7,13 @@
       {% if featured_products | length > 0 %}
       <div class="featured-products">
         <div class="container">
+          {% if settings.featured_products_title is not empty %}
+          <div class="row">
+            <div class="col-sm-12 c-brand-h">
+              <h2 class="c-brand upper">{{ settings.featured_products_title }}</h2>
+            </div>
+          </div>
+          {% endif %}
           <div class="row">
             {% set limit = settings.featured_products_limit is not empty ? min(0+settings.featured_products_limit, 50) : 50 %}
             {% for product in featured_products | slice(0, limit) %}

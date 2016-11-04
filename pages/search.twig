@@ -1,54 +1,46 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-  Buscar
-{% endblock main_title %}
-
 {% block body %}
-    <div class="search pad">
-        <div class="container">
-            <div class="row">
-                {% if not performed %}
-                  <div class="col-sm-6 col-sm-offset-3">
-                    <form method="get">
-                      <input class="text-center" type="text" name="q" placeholder="Término de búsqueda">
-                      <button type="submit" class="btn full">Buscar</button>
-                    </form>
-                  </div>
-                {% else %}
-                    <div class="col-sm-12">
-                      <h2 class="c-brand">Resultados de la búsqueda para: "{{ search }}"</h2>
-                    </div>
-                    {% if results.products | length <= 0 %}
-                      <div class="col-sm-12">
-                        <p>No se encontraron productos con los términos de búsqueda.</p>
-                      </div>
-                    {% else %}
-                      <div class="col-sm-12 pad-min"></div>
-                      {% for product in results.products %}
-                        {% if product.image_url is not empty and product.image_url is defined %}
-                          {% set image_url = product.image_url ~ '?w=600&h=600' %}
-                        {% else %}
-                          {% set image_url = 'default/placeholder.svg' | asset_url %}
-                        {% endif %}
-                        <div class="col-sm-2">
-                          <a href="/productos/{{ product.permalink }}">
-                            <img src="{{ image_url }}" alt="{{ product.name | escape  }}">
-                          </a>
-                        </div>
-                        <div class="col-sm-10">
-                          <h3>{{ product.name }}</h3>
-                          <p class="bold bold--light upper">SKU: {{ product.sku.code }}</p>
-                          <p>{{ product.excerpt }}</p>
-                          <h4>{{ product.price | money('symbol', 'code') }}</h4>
-                          <a class="btn" href="/productos/{{ product.permalink }}">Ver más</a>
-                        </div>
-                        <div class="col-sm-12 pad-min"></div>
-                      {% endfor %}
-                      </div>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
+<div class="search pad">
+  <div class="container">
+    {% if not performed %}
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <form method="get">
+          <input class="text-center" type="text" name="q" placeholder="Término de búsqueda">
+          <button type="submit" class="btn full">Buscar</button>
+        </form>
+      </div>
     </div>
-{% endblock body %}
+    {% else %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 class="c-brand">Resultados de la búsqueda para: "{{ search }}"</h2>
+      </div>
+    </div>
+    <div class="pad-min"></div>
+    <div class="row">
+      {% if results.products | length <= 0 %}
+      <div class="col-sm-12">
+        <p>No se encontraron productos con los términos de búsqueda.</p>
+      </div>
+      {% else %}
+        <div class="col-xs-12">
+          <div class="featured-products">
+            {% for products_row in results.products | batch(4) %}
+            <div class="row">
+              {% for product in products_row %}
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                  {% include "_product-card.twig" %}
+                </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

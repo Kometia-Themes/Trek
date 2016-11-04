@@ -1,15 +1,4 @@
-{% if settings.featured_blog_home_thumbnails_enabled %}
-  {% if post.image_url is not empty and post.image_url is defined %}
-    {% set image_exists = true %}
-    {% set image_url = post.image_url ~ '?w=600&h=480' %}
-  {% else %}
-    {% set image_exists = true %}
-    {% set image_url = 'default/placeholder.svg' | asset_url %}
-  {% endif %}
-{% else %}
-  {% set image_exists = false %}
-  {% set image_url = 'default/placeholder.svg' | asset_url %}
-{% endif %}
+{% set has_thumbnail = settings.featured_blog_home_thumbnails_enabled %}
 
 {% if side is not defined %}
   {% set side = "left" %}
@@ -19,34 +8,48 @@
   <div class="row">
   {% if side == 'left' %}
 
-  {% if image_exists %}
-  <div class="col-sm-6">
-    <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
-        <img src="{{ image_url }} " alt="{{ post.name | escape }}" class="blog-card__img">
+  {% if has_thumbnail %}
+  <div class="col-sm-5">
+    <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
+      {% if post.image_url is not empty and post.image_url is defined %}
+      <img src="{{ post.image_url }}?w=450&h=450" alt="{{ post.name | escape }}" class="img-responsive">
+      {% else %}
+      <img src="{{ 'placeholders/product-11.jpg' | global_img_url }}" alt="{{ post.name | escape }}" class="img-responsive">
+      {% endif %}
     </a>
   </div>
   {% endif %}
-  <div class="{% if image_exists %}col-sm-6{% else %}col-sm-12 col-md-8 col-md-offset-2{% endif %}">
-    <h3 class="section-heading"><a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">{{ post.title }}</a></h3>
-    <p class="blog__item__excerpt">{{ post.summary }}</p>
-    <br/>
-    <a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}" class="btn btn--outline">Leer más</a>
+  <div class="{% if has_thumbnail %}col-sm-7{% else %}col-sm-12 col-md-8 col-md-offset-2{% endif %}">
+    <h3 class="c-brand">
+      <a href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">{{ post.title }}</a>
+    </h3>
+    <div class="post__summary">
+      {{ (post.summary is not empty ? post.summary : post.content) | truncate_words(70) }}
+    </div>
+    <a class="btn btn--outline" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">Leer más</a>
   </div>
+
   {% else %}
-  {% if image_exists %}
-  <div class="col-sm-6 col-sm-push-6">
-    <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
-      <a class="blog__item__img__link" href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">
-          <img src="{{ image_url }} " alt="{{ post.name | escape }}" class="blog-card__img">
-      </a>
+
+  {% if has_thumbnail %}
+  <div class="col-sm-5 col-sm-push-7">
+    <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
+      {% if post.image_url is not empty and post.image_url is defined %}
+      <img src="{{ post.image_url }}?w=450&h=450" alt="{{ post.name | escape }}" class="img-responsive">
+      {% else %}
+      <img src="{{ 'placeholders/product-11.jpg' | global_img_url }}" alt="{{ post.name | escape }}" class="img-responsive">
+      {% endif %}
     </a>
   </div>
   {% endif %}
-  <div class="{% if image_exists %}col-sm-6 col-sm-pull-6{% else %}col-sm-12 col-md-8 col-md-offset-2{% endif %}">
-    <h3 class="section-heading"><a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}">{{ post.title }}</a></h3>
-    <p class="blog__item__excerpt">{{ post.summary }}</p>
-    <br/>
-    <a href="/blogs/{{ featured_blog.permalink }}/posts/{{ post.permalink }}" class="btn btn--outline">Leer más</a>
+  <div class="{% if has_thumbnail %}col-sm-7 col-sm-pull-5{% else %}col-sm-12 col-md-8 col-md-offset-2{% endif %}">
+    <h3 class="c-brand">
+      <a href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">{{ post.title }}</a>
+    </h3>
+    <div class="post__summary">
+      {{ (post.summary is not empty ? post.summary : post.content) | truncate_words(70) }}
+    </div>
+    <a class="btn btn--outline" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">Leer más</a>
   </div>
   {% endif %}
   </div>

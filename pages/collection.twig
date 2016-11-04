@@ -1,93 +1,56 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-  {{ collection.title | escape }}
-{% endblock main_title %}
-
-{% if collection.image_url is not empty and collection.image_url  is defined %}
-  {% set image_url = collection.image_url ~ '?w=1280&h=560&fit=crop' %}
-{% else %}
-  {% set image_url = 'default/placeholder.svg' | asset_url %}
-{% endif %}
-
 {% block body %}
-<div class="collection pad">
+<div class="collection">
   <div class="container">
-      <div class="row">
-          <div class="col-sm-12 text-center">
-              <h2 class="c-brand upper">{{ collection.title | escape }}</h2>
-              <p>{{ collection.description }}</p>
-          </div>
+    <div class="row">
+      <div class="col-xs-12 c-brand-h">
+        <h1 class="c-brand upper">{{ collection.title | escape }}</h1>
+        <p>{{ collection.description }}</p>
       </div>
-      {% if collection.products | length > 0 %}
-      <div class="row">
-          <div class="col-sm-12 pad-min"></div>
-          {% if collection.has_filters %}
-           {% set col_size = 'col-md-9 col-sm-12 col-xs-12' %}
-          <div class="col-md-3 col-sm-12 col-xs-12">
-            <div class="sidebar">
-              {% if collection.filters.tags is defined %}
-                <h4>Etiquetas</h4>
-                {% for tag in collection.filters.tags %}
-                  <input id="tag_{{ loop.index }}" type="checkbox" name="tags" value="{{ tag.permalink }}">
-                  <label for="tag_{{ loop.index }}">{{ tag.title }}</label>
-                {% endfor %}
-              {% endif %}
-              {% if collection.filters.variants is defined %}
-                {% for modifier, options in collection.filters.variants %}
-                  <br/>
-                  <h4>{{ modifier }}</h4>
-                  {% for option in options %}
-                    <input id="{{ modifier }}_tag_{{ loop.index }}" type="checkbox" name="{{ modifier }}" value="{{ option }}">
-                    <label for="{{ modifier }}_tag_{{ loop.index }}">{{ option }}</label>
-                  {% endfor %}
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-          {% else %}
-            {% set col_size = 'col-sm-12' %}
-          {% endif %}
-          <div class="{{ col_size }}">
-            <div class="featured-products">
-              {% for product in collection.products %}
-                {% if loop.index <= 1 %}
-                  <div class="col-sm-12">
-                    {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
-                  </div>
-                {% else %}
-                  <div class="col-sm-6">
-                    {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
-                  </div>
-                  {% if loop.index % 2 == 1 %}
-                    <br style="clear: both;">
-                  {% endif %}
-                {% endif %}
-              {% endfor %}
-            </div>
-          </div>
-          <div class="col-sm-12 pad-min"></div>
-          <br class="clear">
-          <div class="col-sm-12 text-center">
-            {% include '_pagination.twig' %}
-          </div>
-      </div>
-    {% else %}
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="pad">
-            <div class="placeholder-help">
-              <div class="placeholder-helper">
-                <div class="placeholder-info">
-                  <p>Todavía no hay productos en la colección, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí.</p>
-                  <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
-                </div>
-              </div>
-            </div>
+    </div>
+    <div class="row">
+      {% if settings.show_collections_sidebar %}
+      <div class="col-md-3 categories-filter">
+        <div class="sidebar">
+          <h4>Colecciones</h4>
+          <hr>
+          <div class="categories__container">
+            <ul class="category">
+            {% for collection_element in collections %}
+              {% include '_collection_tree_item.twig' with { 'collection': collection_element } only %}
+            {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
-    {% endif %}
+      {% endif %}
+
+      <div class="{% if settings.show_collections_sidebar %}col-md-9{% else %}col-md-12{% endif %}">
+      {% if products.count == 0 %}
+        {% include '_products-empty.twig' %}
+      {% else %}
+        {% set batches = settings.show_collections_sidebar ? 3 : 4 %}
+        {% set cols = settings.show_collections_sidebar ? 4 : 3 %}
+        <div class="row">
+          <div class="col-xs-12 featured-products">
+            {% for products_row in products | batch(batches) %}
+            <div class="row">
+              {% for product in products_row %}
+                <div class="col-xs-12 col-sm-6 col-md-{{ cols }}">
+                  {% include "_product-card.twig" %}
+                </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% include '_pagination.twig' %}
+
+      {% endif %}
+      </div>
+    </div>
   </div>
 </div>
-{% endblock body %}
+{% endblock %}

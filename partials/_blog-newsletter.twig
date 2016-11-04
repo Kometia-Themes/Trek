@@ -1,0 +1,25 @@
+{% if settings.show_newsletter %}
+<div class="newsletter--internal pad">
+  <div class="pad-min"></div>
+    {% form 'newsletter' %}
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h2 class="c-brand upper">¿Te gusta lo que estás leyendo?</h2>
+            <p>Inscríbete contenido exclusivo, ofertas especiales y noticias.</p>
+          </div>
+        </div>
+        <div class="pad-min"></div>
+        <div class="row">
+          <div class="col-xs-12 col-md-4 col-md-offset-2 vcenter">
+            <input type="text" name="newsletter" placeholder="Escribe tu email aquí">
+          </div>
+          <div class="col-xs-12 col-md-4 vcenter">
+            <button type="submit" class="btn btn-block">Suscríbete</button>
+          </div>
+        </div>
+      </div>
+    {% endform %}
+  <div class="pad-min"></div>
+</div>
+{% endif %}

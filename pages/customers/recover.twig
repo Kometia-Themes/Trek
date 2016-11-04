@@ -1,23 +1,28 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-  Login
-{% endblock main_title %}
-
 {% block body %}
 <div class="container page">
   <div class="row">
-    <div class="pad">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-          <h2 class="page__title section-heading">Recuperar Contraseña</h2>
-        </div>
-    </div>
-  </div>
-    <div class="row">
-    <div class="col-sm-8 col-sm-offset-2 page__content text-center">
+    <div class="col-xs-12 c-brand-h">
+      <h1 class="c-brand upper">Recuperar Contraseña</h1>
       <p>Debe proporcionar una correo ya registrado anteriormente.</p>
     </div>
   </div>
-  {% include "_recover-form.twig" %}
+  {% form 'customer_recover_password' 'role="form" class="login-form"' %}
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="form-group">
+          <input type="email" class="form-control input-lg input-recover" id="email" name="email" placeholder="Correo electrónico" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="form-group">
+          <input class="btn btn-action btn-block" type="submit" name="submit" id="submit" value="&nbsp; Recuperar &nbsp;">
+        </div>
+      </div>
+    </div>
+  {% endform %}
 </div>
-{% endblock body %}
+{% endblock %}

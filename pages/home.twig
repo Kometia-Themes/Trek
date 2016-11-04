@@ -38,4 +38,53 @@
 <script type="text/javascript">
   slider_home();
 </script>
+
+<!-- Instagram begin -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lscache/1.0.7/lscache.min.js"></script>
+
+<script>
+  $(function($) {
+    var $instagramContainer = $('.instagram');
+
+    if ($instagramContainer.length > 0) {
+      initInstagram();
+    }
+
+    function renderImages(images) {
+      var html = '';
+
+      $.each(images, function(_, image) {
+        html += '<div class="col-md-2 col-sm-3 col-xs-4">' +
+            '<a href="' + image.link + '" target="_blank">' +
+                '<img class="img-responsive" src="' + image.images.thumbnail.url + '" />' +
+            '</a>' +
+         '</div>';
+      });
+
+      $instagramContainer.html('<div class="row">' + html + '</div>');
+    }
+
+    function initInstagram() {
+      var cacheKey = 'instagram-{{ settings.instagram_id }}';
+      var instagramCache = lscache.get(cacheKey);
+
+      if (instagramCache) {
+        renderImages(instagramCache);
+      } else {
+        $instagramContainer.on('didLoadInstagram', function(event, response) {
+          lscache.set(cacheKey, response.data, 30);
+          renderImages(response.data);
+        });
+
+        $instagramContainer.instagram({
+            userId: '{{ settings.instagram_id }}',
+            accessToken: '{{ settings.instagram_token }}',
+            count: 12,
+        });
+      }
+    }
+ });
+</script>
+<!-- Instagram end -->
 {% endblock %}

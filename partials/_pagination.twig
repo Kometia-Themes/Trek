@@ -1,24 +1,25 @@
 {% if pagination.last > 1 %}
-
-<div class="paginator">
-  <ul>
-  {% if pagination.current <= 1 %}
-    <li class="disabled"><a><span class="fa fa-arrow-circle-left"></span></a></li>
-  {% else %}
-    <li><a href="{{ pagination.previous_link }}"><span class="fa fa-arrow-circle-left"></span></a></li>
-  {% endif %}
-  {% for index, link in pagination.links %}
-      {% if index == pagination.current %}
-        <li class="active"><a>{{ index }}</a></li>
-      {% else %}
-        <li><a href="{{ link }}">{{ index }}</a></li>
-      {% endif %}
-  {% endfor %}
-  {% if pagination.current == pagination.last %}
-    <li class="disabled"><a><span class="fa fa-arrow-circle-right "></span></a></li>
-  {% else %}
-    <li><a href="{{ pagination.next_link }}"><span class="fa fa-arrow-circle-right "></span></a></li>
-  {% endif %}
-  </ul>
+<div class="row text-center pad">
+  <div class="paginator">
+    <ul>
+    {% if pagination.current <= 1 %}
+      <li class="disabled"><a><span class="fa fa-arrow-circle-left"></span></a></li>
+    {% else %}
+      <li><a href="{{ pagination.previous_link }}"><span class="fa fa-arrow-circle-left"></span></a></li>
+    {% endif %}
+    {% for index, link in pagination.links %}
+        {% if index == pagination.current %}
+          <li class="active"><a>{{ index }}</a></li>
+        {% else %}
+          <li><a href="{{ link }}">{{ index }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if pagination.current == pagination.last %}
+      <li class="disabled"><a><span class="fa fa-arrow-circle-right "></span></a></li>
+    {% else %}
+      <li><a href="{{ pagination.next_link }}"><span class="fa fa-arrow-circle-right "></span></a></li>
+    {% endif %}
+    </ul>
+  </div>
 </div>
 {% endif %}

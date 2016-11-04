@@ -1,5 +1,3 @@
-{% set somethig_in_cart = "active" %}
-
 <nav class="main-menu">
   <div class="container">
     <div class="line fix">
@@ -12,12 +10,12 @@
           {% endif %}
         </a>
       </div>
-      
+
       <div class="scol-10--full scol--middle text-right top-options">
         {% if customer %}
         <a href="/cuenta">
           <!-- <i class="fa fa-user"></i> -->
-          <img src="{{ 'default/login.svg'| asset_url }}" alt="Account">
+          <img src="{{ 'login.svg' | asset_url }}" alt="Account">
           <span>Mi cuenta</span>
         </a>
         <span> | </span>
@@ -28,7 +26,7 @@
       {% else %}
         <a href="/cuenta/login">
           <!-- <i class="fa fa-user"></i> -->
-          <img src="{{ 'default/login.svg'| asset_url }}" alt="Loggin">
+          <img src="{{ 'login.svg' | asset_url }}" alt="Loggin">
           <span>Acceder</span>
         </a>
       {% endif %}
@@ -38,7 +36,7 @@
         <a class="shopping-cart" href="/carrito">
       {% endif %}
         <!-- <i class="fa fa-shopping-cart"></i> -->
-        <img src="{{ 'default/shopcart.svg'| asset_url }}" alt="Carrito">
+        <img src="{{ 'shopcart.svg'| asset_url }}" alt="Carrito">
         <span>Carrito</span>
         {% if cart.total_items > 0 %}
             <span class="cart-notification">{{ cart.total_items }}</span>
