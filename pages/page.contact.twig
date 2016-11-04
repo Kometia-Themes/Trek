@@ -40,8 +40,15 @@
       </div>
     </div>
 
+    {% set has_content = page.content is not empty %}
+
     <div class="row">
-      <div class="col-sm-12">
+      {% if has_content %}
+      <div class="col-sm-6">
+        {{ page.content }}
+      </div>
+      {% endif %}
+      <div class="{% if has_content %}col-sm-6{% else %}col-sm-12{% endif %}">
         {% if errors is not empty %}
         <div class="alert alert-danger fade in">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -68,8 +75,8 @@
         <button type="submit" class="btn btn--outline">Enviar</button>
         {% endform %}
       </div>
-
     </div>
+
   </div>
 </div>
 {% endblock %}
