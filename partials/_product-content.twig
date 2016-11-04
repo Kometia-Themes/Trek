@@ -1,0 +1,93 @@
+<div class="product-single pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="main-product">
+        {% if product.images | length == 0 %}
+        <img src="{{ 'placeholders/product-15.jpg' | global_img_url }}" alt="{{ product.name }}" id="zoom">
+        {% else %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" id="zoom">
+        {% endif %}
+        </div>
+        {% if product.images | length > 1 %}
+        <div class="slider-product js-slider">
+          {% for thumbnail in product.images %}
+          <div>
+            <img src="{{ thumbnail.url }}" alt="{{ product.name }}">
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-sm-6">
+        <div class="product-price-data">
+          <form action="/carrito/agregar" method="post">
+            <input type="hidden" name="sku_id" id="js-sku-id" value="{{ product.sku.id }}">
+            <h2 class="product-card-data__name c-brand">{{ product.name }}</h2>
+            {% if product.sku.code is not empty %}
+            <p class="product-features">SKU</p>
+            <p class="bold bold--light upper">{{ product.sku.code }}</p>
+            <br/>
+            {% endif %}
+
+            {% if product.sku.compared_price > 0 %}
+            <p class="product-price-data__text" id="js-price-preview"><del>{{ product.sku.compared_price | money('symbol', 'code') }}</del><br><span class="product-price-data-price product-price__discount">{{ product.sku.price | money('symbol', 'code') }}</span>
+            </p>
+            {% else %}
+            <p class="product-price-data__text" id="js-price-preview">
+              <span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span>
+            </p>
+            {% endif %}
+
+            {% if product.skus_modifiers | length > 0 %}
+            <p class="product-features hide-product-{{ index }}">Disponible en</p>
+            <div>
+              {% for attribute, attribute_variants in product.skus_modifiers %}
+              <div class="form-group hide-product-{{ index }}">
+                {% set step = loop.index - 1 %}
+                {% for variant in attribute_variants %}
+                <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ variant }}" class="sku-selectors">
+                <label for="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}">{{ variant }}</label>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="row">
+              <br/>
+              <div class="col-sm-12 quantity">
+                <p class="product-features">Cantidad</p>
+              </div>
+              <div class="col-sm-4 quantity">
+                <input type="text" class="text-center" name="quantity" id="quantity" placeholder="###" autocomplete="off">
+              </div>
+              <div class="col-sm-8">
+                {% if product.is_in_stock %}
+                {% set btn_text = 'Comprar ahora' %}
+                {% set btn_disabled = '' %}
+                {% else %}
+                {% set btn_text = 'No disponible' %}
+                {% set btn_disabled = 'disabled' %}
+                {% endif %}
+                <button type="submit" class="btn full buy-now" id="js-add-to-cart" {{ btn_disabled }}>{{ btn_text }}</button>
+              </div>
+            </div>
+
+            {% if product.description is not empty %}
+            <br/>
+            <p class="product-features">Descripción</p>
+            {{ product.description }}
+            {% endif %}
+          </form>
+          {% if settings.enable_share_products %}
+          <div class="product__social-share">
+            <p class="product-features">Compartir</p>
+            {% include '_social-share.twig' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -115,25 +115,6 @@ function slider_home() {
     });
 }
 
-function slider_product() {
-  $('.slider-product').show();
-
-  $('.autoplay').slick({
-      arrows: false,
-      dots: true,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 3000,
-      pauseOnHover: true
-  });
-
-  $('.product-single .slick-slide').on('click', function(e) {
-      mainProduct = $(this).find('img').attr('src');
-      $('.main-product').find('img').attr('src', mainProduct);
-  });
-}
-
 /* * * * * * * * * */
 /* Disabled */
 /* * * * * * * * * */

@@ -1,54 +1,49 @@
 {% if settings.featured_products_limit > 0 %}
-  {% if settings.show_featured_products %}
-    {% if settings.featured_products_collection is not empty and collections[settings.featured_products_collection]is defined %}
-    {% set featured_products = collections[settings.featured_products_collection].products %}
-    {% endif %}
-    {% if settings.featured_products_collection is not empty %}
-      {% if featured_products | length > 0 %}
-      <div class="featured-products">
-        <div class="container">
-          {% if settings.featured_products_title is not empty %}
-          <div class="row">
-            <div class="col-sm-12 c-brand-h">
-              <h2 class="c-brand upper">{{ settings.featured_products_title }}</h2>
-            </div>
-          </div>
-          {% endif %}
-          <div class="row">
-            {% set limit = settings.featured_products_limit is not empty ? min(0+settings.featured_products_limit, 50) : 50 %}
-            {% for product in featured_products | slice(0, limit) %}
-              {% if loop.index <= 1 %}
-              <div class="col-sm-12">
-                {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
-              </div>
-              {% else %}
-              <div class="col-sm-6">
-                {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
-              </div>
-                {% if loop.index % 2 == 1 %}
-                <br style="clear: both;">
-                {% endif %}
-              {% endif %}
-            {% endfor %}
+  {% if settings.featured_products_collection is not empty and collections[settings.featured_products_collection] is defined %}
+  {% set featured_products = collections[settings.featured_products_collection].products %}
+  {% endif %}
+  {% if settings.featured_products_collection is not empty %}
+    {% if featured_products | length > 0 %}
+    <div class="featured-products">
+      <div class="container">
+        {% if settings.featured_products_title is not empty %}
+        <div class="row">
+          <div class="col-sm-12 c-brand-h">
+            <h2 class="c-brand upper">{{ settings.featured_products_title }}</h2>
           </div>
         </div>
-      </div>
-      {% endif %}
-    {% else %}
-    <div class="container">
-      <div class="row pad">
-        <div class="col-sm-12">
-          <div class="placeholder-help">
-            <div class="placeholder-helper">
-              <div class="placeholder-info">
-                <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
-                <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
-              </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-sm-12">
+          {% set limit = settings.featured_products_limit is not empty ? min(0+settings.featured_products_limit, 50) : 50 %}
+          {% for products_row in featured_products | slice(0, limit) | batch(4) %}
+            <div class="row">
+              {% for product in products_row %}
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                  {% include "_product-card.twig" %}
+                </div>
+              {% endfor %}
             </div>
+          {% endfor %}
           </div>
         </div>
       </div>
     </div>
     {% endif %}
+  {% else %}
+  <div class="container">
+    <div class="row pad">
+      <div class="col-sm-12">
+        <div class="placeholder-help">
+          <div class="placeholder-helper">
+            <div class="placeholder-info">
+              <p>Todavía no hay productos, sin embargo, una vez que comiences a agregar cada uno de ellos, éstos se registrarán aquí sin importar si ya aparecen en existencia dentro de la colección.</p>
+              <a href="/admin/products" class="btn btn-placeholder">Agregar Productos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   {% endif %}
 {% endif %}

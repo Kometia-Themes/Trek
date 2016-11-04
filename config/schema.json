@@ -492,6 +492,9 @@
           "value": "featured-products",
           "label": "Colección destacada"
         }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
+        }, {
           "value": "featured-advices",
           "label": "Consejos"
         }, {
@@ -521,6 +524,9 @@
         }, {
           "value": "featured-products",
           "label": "Colección destacada"
+        }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
         }, {
           "value": "featured-advices",
           "label": "Consejos"
@@ -552,6 +558,9 @@
           "value": "featured-products",
           "label": "Colección destacada"
         }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
+        }, {
           "value": "featured-advices",
           "label": "Consejos"
         }, {
@@ -581,6 +590,9 @@
         }, {
           "value": "featured-products",
           "label": "Colección destacada"
+        }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
         }, {
           "value": "featured-advices",
           "label": "Consejos"
@@ -612,6 +624,9 @@
           "value": "featured-products",
           "label": "Colección destacada"
         }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
+        }, {
           "value": "featured-advices",
           "label": "Consejos"
         }, {
@@ -642,6 +657,9 @@
           "value": "featured-products",
           "label": "Colección destacada"
         }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
+        }, {
           "value": "featured-advices",
           "label": "Consejos"
         }, {
@@ -671,6 +689,42 @@
         }, {
           "value": "featured-products",
           "label": "Colección destacada"
+        }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
+        }, {
+          "value": "featured-advices",
+          "label": "Consejos"
+        }, {
+          "value": "featured-banner",
+          "label": "Banner"
+        }, {
+          "value": "featured-instagram",
+          "label": "Galería Instagram"
+        }, {
+          "value": "featured-blog",
+          "label": "Blog"
+        }]
+      }, {
+        "type": "select",
+        "id": "frontpage_section_8",
+        "label": "Sección 8",
+        "default": "none",
+        "options": [{
+          "value": "none",
+          "label": "Ningúno"
+        }, {
+          "value": "featured-slider",
+          "label": "Slider"
+        }, {
+          "value": "featured-newsletter",
+          "label": "Newsletter"
+        }, {
+          "value": "featured-products",
+          "label": "Colección destacada"
+        }, {
+          "value": "featured-product",
+          "label": "Producto destacado"
         }, {
           "value": "featured-advices",
           "label": "Consejos"
@@ -950,6 +1004,20 @@
       }]
     }]
   }, {
+    "name": "Página de Inicio - Producto",
+    "icon": "home-page",
+    "sections": [{
+      "settings": [{
+        "type": "product",
+        "id": "featured_product",
+        "label": "Producto destacados"
+      }, {
+        "type": "text",
+        "id": "featured_product_title",
+        "label": "Texto de sección"
+      }]
+    }]
+  }, {
     "name": "Página de Inicio - Instagram",
     "icon": "home-page",
     "sections": [{
@@ -1163,6 +1231,17 @@
         "type": "checkbox",
         "id": "show_collections_sidebar",
         "label": "Mostrar las barra de colecciones",
+        "default": true
+      }]
+    }]
+  }, {
+    "name": "Producto",
+    "icon": "product-page",
+    "sections": [{
+      "settings": [{
+        "type": "checkbox",
+        "id": "enable_product_image_zoom",
+        "label": "Habilitar zoom en imagen principal",
         "default": true
       }]
     }]

@@ -1,0 +1,31 @@
+{% set product = all_products[settings.featured_product] %}
+{% if product is not empty %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 c-brand-h">
+        <h2 class="c-brand upper">{{ settings.featured_product_title }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        {% include '_product-content.twig' %}
+        {% include '_product-content-js.twig' %}
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="container">
+    <div class="row pad">
+      <div class="col-sm-12">
+        <div class="placeholder-help">
+          <div class="placeholder-helper">
+            <div class="placeholder-info">
+              <p>Todavía no hay un producto destacado seleccionado.</p>
+              <a href="/admin/themes" class="btn btn-placeholder">Seleccionar producto</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
