@@ -1187,7 +1187,7 @@
       }, {
         "type": "checkbox",
         "id": "featured_blog_home_thumbnails_enabled",
-        "label": "Mostrar las imagen destacada",
+        "label": "Mostrar la imagen destacada",
         "default": true
       }, {
         "type": "text",
@@ -1214,7 +1214,7 @@
       "settings": [{
         "type": "checkbox",
         "id": "featured_blog_thumbnails_enabled",
-        "label": "Mostrar las imagen destacada",
+        "label": "Mostrar la imagen destacada",
         "default": true
       }, {
         "type": "checkbox",

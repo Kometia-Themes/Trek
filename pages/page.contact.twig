@@ -33,16 +33,7 @@
       </div>
     </div>
 
-    {% if settings.contact_info %}
-    <div class="row">
-      <br>
-      <div class="col-sm-12">
-        &copy;2016 {{ store.name }} {{ settings.footer_contact_data|nl2br }}
-      </div>
-    </div>
-    {% endif %}
-
-    <div class="row">
+    <div class="row pad">
       <div class="col-sm-12 text-center">
         <h2 class="c-brand upper">{{ settings.contact_form_title }}</h2>
         <p>{{ settings.contact_form_description }}</p>
