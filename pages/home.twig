@@ -39,6 +39,7 @@
   slider_home();
 </script>
 
+{% if settings.instagram_id is not empty and settings.instagram_token is not empty %}
 <!-- Instagram begin -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lscache/1.0.7/lscache.min.js"></script>
@@ -87,4 +88,5 @@
  });
 </script>
 <!-- Instagram end -->
+{% endif %}
 {% endblock %}

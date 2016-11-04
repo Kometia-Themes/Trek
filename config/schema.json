@@ -1022,21 +1022,20 @@
     "icon": "home-page",
     "sections": [{
       "settings": [{
+        "type": "paragraph",
+        "content": "Esta configuración requiere de conocimientos avanzados, cualquier duda contacta al equipo de Shoperti"
+      }, {
         "type": "text",
         "id": "instagram_title",
         "label": "Título de sección"
       }, {
         "type": "text",
         "id": "instagram_id",
-        "label": "Id de usuario",
-        "default": "2035126536",
-        "info": "Visita: https://www.instagram.com/developer/clients/manage"
+        "label": "Id de usuario"
       }, {
         "type": "text",
         "id": "instagram_token",
-        "label": "Token de sesión",
-        "default": "2035126536.ee630b4.280b32f92fc342f99f74ede52ad7565e",
-        "info": "Visita: https://www.instagram.com/developer/authentication"
+        "label": "Token de sesión"
       }]
     }]
   }, {
