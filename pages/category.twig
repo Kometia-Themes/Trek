@@ -1,119 +1,55 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-    {{ category.title }}
-{% endblock main_title %}
-
 {% block body %}
-
-    <div class="categories pad">
-
-        <div class="container">
-
-            <div class="row">
-
-                <div class="col-sm-12 text-center">
-
-                    <h2 class="c-brand upper">
-
-                        {{ category.title }}
-
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-sm-3 categories-filter">
-
-                    <div class="sidebar">
-
-                        <h4>Categorias</h4>
-                        <hr>
-
-                        <div class="categories__container">
-
-                            {% if categories | length > 0 %}
-
-                                {% for categoryElement in categories %}
-
-                                    {% include '_category_tree_item.twig' with {
-                                    'category' : categoryElement,
-                                    'current'  : category
-                                    } only %}
-
-                                {% endfor %}
-
-                            {% else %}
-
-                                No hay subcategorías
-
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-sm-9">
-
-                    <div class="row">
-
-                        <div class="featured-products">
-
-                            {% for product in products %}
-
-                                {% if loop.index <= 1 %}
-
-                                    <div class="col-sm-12">
-
-                                        {% include "_product-card.twig" with {'col_img': 'col-sm-6', 'index': loop.index } %}
-
-                                    </div>
-
-                                {% else %}
-
-                                    <div class="col-sm-6">
-
-                                        {% include "_product-card.twig" with {'col_img': 'col-sm-4', 'col_desc': 'col-sm-8', 'index': loop.index } %}
-
-                                    </div>
-
-                                    {% if loop.index % 2 == 1 %}
-                                        <br style="clear: both;">
-                                    {% endif %}
-
-                                {% endif %}
-
-                            {% endfor %}
-
-                        </div>
-
-                    </div>
-
-                    <div class="row text-center">
-                        {% include '_pagination.twig' %}
-                    </div>
-
-                </div>
-
-                <div class="col-sm-12 pad-min"></div>
-
-                <br class="clear">
-
-                <div class="col-sm-12 text-center">
-
-                    {% include '_pagination.twig' %}
-
-                </div>
-
-            </div>
-
-        </div>
-
+<div class="categories">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 c-brand-h">
+        <h1 class="c-brand upper">{{ category.title }}</h1>
+      </div>
     </div>
+    <div class="row">
+    {% set has_categories = categories | length > 0 %}
+    {% if has_categories %}
+    <div class="col-md-3 categories-filter">
+      <div class="sidebar">
+        <h4>Categorías</h4>
+        <hr>
+        <div class="categories__container">
+        {% for category_element in categories %}
+          <ul class="category">
+          {% include '_category_tree_item.twig' with { 'category': category_element, 'current': category } only %}
+          </ul>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
-{% endblock body %}
+    <div class="{% if has_categories %}col-md-9{% else %}col-md-12{% endif %}">
+    {% if products.count == 0 %}
+      {% include '_products-empty.twig' %}
+    {% else %}
+      {% set batches = has_categories ? 3 : 4 %}
+      {% set cols = has_categories ? 4 : 3 %}
+      <div class="row">
+        <div class="col-xs-12 featured-products">
+          {% for products_row in products | batch(batches) %}
+          <div class="row">
+            {% for product in products_row %}
+              <div class="col-xs-12 col-sm-6 col-md-{{ cols }}">
+                {% include "_product-card.twig" %}
+              </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    {% include '_pagination.twig' %}
+
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% if 'post' in template or 'blog' in template %}
+  {% set permalink_url = canonical_url %}
+  {% set share_title = post.title | escape %}
+{% elseif 'product' in template %}
+  {% set permalink_url = canonical_url %}
+  {% set share_title = product.name | escape %}
+{% elseif template == 'password' %}
+  {% set permalink_url = canonical_url %}
+  {% set share_title = store.name | escape %}
+{% endif %}
+
+<ul class="social-sharing" data-permalink="{{ permalink_url }}">
+
+  {% if settings.share_facebook %}
+  <li>
+    <a target="_blank" href="//www.facebook.com/sharer.php?u={{ permalink_url }}" title="Compartir en Facebook">
+      <img src="{{ 'facebook.svg'| asset_url }}" alt="Facebook">
+    </a>
+  </li>
+  {% endif %}
+
+  {% if settings.share_twitter %}
+  <li>
+    <a target="_blank" href="//twitter.com/share?text={{ share_title }}&amp;url={{ permalink_url }}" title="Tuitear en Twitter">
+      <img src="{{ 'twitter.svg'| asset_url }}" alt="Twitter">
+    </a>
+  </li>
+  {% endif %}
+
+  {% if product.image_url or post.image_url %}
+
+    {% if settings.share_pinterest %}
+    <li>
+      <a target="_blank" href="//pinterest.com/pin/create/button/?url={{ permalink_url }}&amp;media=http:{% if 'product' in template %}{{ product.image_url }}{% else %}{{ post.image_url }}{% endif %}&amp;description={{ share_title }}" title="Pinear en Pinterest">
+       <img src="{{ 'pinterest.svg'| asset_url }}" alt="Pinterest">
+      </a>
+    </li>
+    {% endif %}
+
+  {% endif %}
+
+  {% if settings.share_google %}
+  <li>
+    <a target="_blank" href="//plus.google.com/share?url={{ permalink_url }}" title="+1 en Google Plus">
+      <img src="{{ 'googleplus.svg'| asset_url }}" alt="G+">
+    </a>
+  </li>
+  {% endif %}
+
+</ul>

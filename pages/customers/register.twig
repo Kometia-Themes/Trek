@@ -1,23 +1,33 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <div class="container page">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2 class="page__title section-heading"> Crea una cuenta</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 page__content">
-                <p>Al registrarte con nosotros obtienes grandes beneficios.</p>
-                <p>Compra de manera rápida / Guarda diferentes direcciones / Consulta el status de tu pedido</p>
-            </div>
-        </div>
-        {{ include("_notifications.twig") }}
-        <div class="row">
-            <div class="col-xs-12">
-                {% include "_register-form.twig" %}
-            </div>
-        </div>
+<div class="container page">
+  <div class="row">
+    <div class="col-xs-12 c-brand-h">
+      <h1 class="c-brand upper">Crea una cuenta</h1>
     </div>
-{% endblock body %}
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+    {% form 'customer_register' 'role="form" class="login-form"' %}
+    <div class="form-group">
+      <input type="text" class="form-control input-lg" id="first_name" name="first_name" placeholder="Nombre" required>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control input-lg" id="last_name" name="last_name" placeholder="Apellido" required>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control input-lg" id="email" name="email" placeholder="Correo electrónico" required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Contraseña" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-lg btn-action">Crear cuenta</button>
+      ó <a href="/cuenta/login">Iniciar Sesión</a>
+    </div>
+    {% endform %}
+    </div>
+  </div>
+</div>
+{% endblock %}

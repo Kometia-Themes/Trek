@@ -1,97 +1,36 @@
-{% if product.image_url is not empty and product.image_url is defined %}
-
-
-    {% set image_url = product.image_url ~ '?w=600&h=600' %}
-
-{% else %}
-
-    {% set image_url = 'default/placeholder.svg' | asset_url %}
-
-{% endif %}
-
-
-{% if col_img is not defined %}
-
-    {% set col_img = "col-sm-6" %}
-
-{% endif %}
-
-{% if col_desc is not defined %}
-
-    {% set col_desc = "col-sm-6" %}
-
-{% endif %}
-
-{% if index is not defined %}
-
-    {% set index = 1 %}
-
-{% endif %}
-
 <div class="product-card">
+  <div class="row">
+    <a href="/productos/{{ product.permalink }}">
+      {% if product.image_url is not empty and product.image_url is defined %}
+      <img class="product-card__img" src="{{ product.image_url }}" alt="{{ product.name }}">
+      {% else %}
+      <img class="product-card__img" src="{{ 'placeholders/product-15.jpg' | global_img_url }}" alt="{{ product.name }}">
+      {% endif %}
+    </a>
+    <div class="product-price-data text-center">
+      <h3 class="product-card-data__title">
+        <a href="/productos/{{ product.permalink }}">{{ product.name }}</a>
+      </h3>
+      {% if product.sku.compared_price > 0 %}
+      <p class="product-price-data__text"><del>{{ product.sku.compared_price | money('symbol', 'code') }}</del>
+      <span class="product-price-data-price product-price__discount">{{ product.sku.price | money('symbol', 'code') }}</span>
+      </p>
+      {% else %}
+      <p class="product-price-data__text"><span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
+      {% endif %}
 
-    <div class="row">
-
-        <div class="{{ col_img }}">
-
-            <a href="/productos/{{ product.permalink }}">
-
-                <img class="product-card__img" src="{{ image_url }}" alt="{{ product.name }}">
-
-            </a>
-
-        </div>
-
-        <div class="{{ col_desc }}">
-
-            <div class="product-price-data">
-
-              <h3 class="product-card-data__title">{{ product.name }}</h3>
-
-              {% if product.sku.compared_price > 0 %}
-
-              <p class="product-price-data__text">Ahorra <span class="cross-text product-price__discount">{{ product.sku.compared_price | money('symbol', 'code') }}</span>
-                <span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-
-              {% else %}
-
-              <p class="product-price-data__text"><span class="product-price-data-price">{{ product.sku.price | money('symbol', 'code') }}</span></p>
-
-              {% endif %}
-
-              <p class="product-features">Características</p>
-              <p>{{ product.excerpt}}</p>
-
-              <br/>
-
-              <a class="btn" href="/productos/{{ product.permalink }}">Ver más</a>
-
-            </div>
-
-        </div>
-
+      {% if product.is_in_stock %}
+        {% if product.has_skus %}
+        <a class="btn btn-small" href="/productos/{{ product.permalink }}">Ver opciones</a>
+        {% else %}
+        <form action="/carrito/agregar" method="post">
+          <input type="hidden" name="sku_id" id="js-sku-id" value="{{ product.sku.id }}">
+          <button class="btn btn-small">Agregar al Carrito</button>
+        </form>
+        {% endif %}
+      {% else %}
+        <a class="btn btn-small disabled" href="/productos/{{ product.permalink }}">No disponible</a>
+      {% endif %}
     </div>
-
+  </div>
 </div>
-
-
-<script>
-
-    {% if product.is_in_stock %}
-
-        var skus = '{{ product.excerpt }}';
-
-    {% else %}
-
-        window.onload = function(event){
-
-            $('.buy-now.product-{{ index }}').html('Agotado').addClass('disabled').before('<br/>');
-            $('.hide-product-{{ index }}').hide();
-
-        }
-
-    {% endif %}
-
-</script>
-
-

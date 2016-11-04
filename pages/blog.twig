@@ -1,83 +1,45 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}
-    Blog
-{% endblock main_title %}
-
 {% block body %}
-
-    <div class="blog">
-
-        <div class="container">
-
-            <div class="row">
-
-                <div class="col-xs-12 text-center">
-
-                    <div class="pad">
-
-                        <h2 class="c-brand upper">{{ blog.title }}</h2>
-                        <p>{{ blog.meta_description }}</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {% if posts|length > 0 %}
-
-                {% for post in posts %}
-
-
-                    <div class="row post">
-
-                        <div class="col-sm-4">
-
-                            <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
-
-                              {% if product.image_url is not empty and product.image_url is defined %}
-
-                                <img src="{{ post.image_url }}?w=1180&h=500&fit=crop" alt="{{ post.name | escape }}" class="img-responsive">
-
-                              {% else %}
-
-                                <img src="/assets/default/placeholder.svg" alt="{{ post.name | escape }}" class="img-responsive">
-
-                              {% endif %}
-
-                            </a>
-
-                        </div>
-
-                        <div class="col-sm-8">
-
-                            <h4 class="c-brand">{{ post.title }}</h4>
-                            <p>{{ post.summary }}</p>
-                            <br/>
-                            <a class="btn btn--outline" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">Leer más</a>
-
-                        </div>
-
-                        {% if loop.index % 1 == 0 %}
-                            <br style="clear: both;">
-                        {% endif %}
-
-                    </div>
-
-                {% endfor %}
-
-                <br/>
-                <br/>
-
-                <div class="row text-center">
-                    {% include '_pagination.twig' %}
-                </div>
-
-            {% endif %}
-
-        </div>
-
+<div class="blog">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 c-brand-h">
+        <h1 class="c-brand upper">{{ blog.title }}</h1>
+      </div>
     </div>
+    {% if posts | length > 0 %}
 
-{% endblock body %}
+    {% set has_thumbnail = settings.featured_blog_thumbnails_enabled %}
+
+    {% for post in posts %}
+    <div class="row post">
+      {% if has_thumbnail %}
+      <div class="col-sm-5">
+        <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
+          {% if post.image_url is not empty and post.image_url is defined %}
+          <img src="{{ post.image_url }}?w=450&h=450" alt="{{ post.name | escape }}" class="img-responsive">
+          {% else %}
+          <img src="{{ 'placeholders/product-11.jpg' | global_img_url }}" alt="{{ post.name | escape }}" class="img-responsive">
+          {% endif %}
+        </a>
+      </div>
+      {% endif %}
+      <div class="{% if has_thumbnail %}col-sm-7{% else %}col-sm-7 col-sm-offset-1{% endif %}">
+        <h3 class="c-brand">
+          <a href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">{{ post.title }}</a>
+        </h3>
+        <div class="post__summary">
+          {{ (post.summary is not empty ? post.summary : post.content) | truncate_words(70) }}
+        </div>
+        <a class="btn btn--outline" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">Leer más</a>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% include '_pagination.twig' %}
+
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -2,27 +2,89 @@
 
 {% block body %}
 
-    {% include "_slider.twig" %}
+{% if settings.frontpage_section_1 is not empty and settings.frontpage_section_1 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_1 ~ '.twig' %}
+{% endif %}
 
-    {% include "_newsletter.twig" %}
+{% if settings.frontpage_section_2 is not empty and settings.frontpage_section_2 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_2 ~ '.twig' %}
+{% endif %}
 
-    {% include "_featured-products.twig" %}
+{% if settings.frontpage_section_3 is not empty and settings.frontpage_section_3 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_3 ~ '.twig' %}
+{% endif %}
 
-    {% include "_instagram.twig" %}
+{% if settings.frontpage_section_4 is not empty and settings.frontpage_section_4 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_4 ~ '.twig' %}
+{% endif %}
 
-    {% include "_featured-advices.twig" %}
+{% if settings.frontpage_section_5 is not empty and settings.frontpage_section_5 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_5 ~ '.twig' %}
+{% endif %}
 
-    {% include "_main-banner.twig" %}
+{% if settings.frontpage_section_6 is not empty and settings.frontpage_section_6 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_6 ~ '.twig' %}
+{% endif %}
 
-    {% include "_featured-blog.twig" %}
+{% if settings.frontpage_section_7 is not empty and settings.frontpage_section_7 != 'none' %}
+  {% include '_' ~ settings.frontpage_section_7 ~ '.twig' %}
+{% endif %}
 
-{% endblock body %}
+{% endblock %}
 
 {% block body_js %}
-    {{ parent() }}
+{{ parent() }}
 
-    <script type="text/javascript">
-        slider_home();
-    </script>
+<script type="text/javascript">
+  slider_home();
+</script>
 
-{% endblock body_js %}
+<!-- Instagram begin -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-instagram/0.3.1/instagram.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lscache/1.0.7/lscache.min.js"></script>
+
+<script>
+  $(function($) {
+    var $instagramContainer = $('.instagram');
+
+    if ($instagramContainer.length > 0) {
+      initInstagram();
+    }
+
+    function renderImages(images) {
+      var html = '';
+
+      $.each(images, function(_, image) {
+        html += '<div class="col-md-2 col-sm-3 col-xs-4">' +
+            '<a href="' + image.link + '" target="_blank">' +
+                '<img class="img-responsive" src="' + image.images.thumbnail.url + '" />' +
+            '</a>' +
+         '</div>';
+      });
+
+      $instagramContainer.html('<div class="row">' + html + '</div>');
+    }
+
+    function initInstagram() {
+      var cacheKey = 'instagram-{{ settings.instagram_id }}';
+      var instagramCache = lscache.get(cacheKey);
+
+      if (instagramCache) {
+        renderImages(instagramCache);
+      } else {
+        $instagramContainer.on('didLoadInstagram', function(event, response) {
+          lscache.set(cacheKey, response.data, 30);
+          renderImages(response.data);
+        });
+
+        $instagramContainer.instagram({
+            userId: '{{ settings.instagram_id }}',
+            accessToken: '{{ settings.instagram_token }}',
+            count: 12,
+        });
+      }
+    }
+ });
+</script>
+<!-- Instagram end -->
+{% endblock %}

@@ -1,99 +1,83 @@
-{% set somethig_in_cart = "active" %}
-
 <nav class="main-menu">
+  <div class="container">
+    <div class="line fix">
+      <div class="scol-10--full scol--middle logo">
+        <a href="/">
+          {% if settings.use_logo %}
+            <img src="{{ settings['nav_logo'] }}" alt="{{ store.name }}">
+          {% else %}
+            <span class="brand-text">{{ store.name }}</span>
+          {% endif %}
+        </a>
+      </div>
 
-    <div class="container">
-
-        <div class="line fix">
-
-            <div class="scol-10--full scol--middle logo">
-
-                <a href="/">
-                    {% if settings.use_logo %}
-                        <img src="{{ settings['nav_logo'] }}" alt="{{ store.name }}">
-                    {% else %}
-                        <span class="brand-text">{{ store.name }}</span>
-                    {% endif %}
-                </a>
-
-            </div>
-
-            <div class="scol-10--full scol--middle text-right top-options">
-
-                <a href="/cuenta/login">
-                    <!-- <i class="fa fa-user"></i> -->
-                    <img src="{{ 'default/login.svg'| asset_url }}" alt="Loggin">
-                    <span>Cuenta</span>
-                </a>
-
-            {% if cart.total_items > 0 %}
-                <a class="shopping-cart active" href="/carrito">
-            {% else %}
-                <a class="shopping-cart" href="/carrito">
-            {% endif %}
-                    <!-- <i class="fa fa-shopping-cart"></i> -->
-                    <img src="{{ 'default/shopcart.svg'| asset_url }}" alt="Carrito">
-                    <span>Carrito</span>
-                    {% if cart.total_items > 0 %}
-                        <span class="cart-notification">{{ cart.total_items }}</span>
-                    {% endif %}
-                </a>
-
-            </div>
-
-            <hr/>
-
-            <div class="scol-15--full scol--top">
-
-                <div class="side-panel">
-
+      <div class="scol-10--full scol--middle text-right top-options">
+        {% if customer %}
+        <a href="/cuenta">
+          <!-- <i class="fa fa-user"></i> -->
+          <img src="{{ 'login.svg' | asset_url }}" alt="Account">
+          <span>Mi cuenta</span>
+        </a>
+        <span> | </span>
+        <a href="/cuenta/logout">
+        <i class="fa fa-user"></i>
+          <span>Salir</span>
+        </a>
+      {% else %}
+        <a href="/cuenta/login">
+          <!-- <i class="fa fa-user"></i> -->
+          <img src="{{ 'login.svg' | asset_url }}" alt="Loggin">
+          <span>Acceder</span>
+        </a>
+      {% endif %}
+      {% if cart.total_items > 0 %}
+        <a class="shopping-cart active" href="/carrito">
+      {% else %}
+        <a class="shopping-cart" href="/carrito">
+      {% endif %}
+        <!-- <i class="fa fa-shopping-cart"></i> -->
+        <img src="{{ 'shopcart.svg'| asset_url }}" alt="Carrito">
+        <span>Carrito</span>
+        {% if cart.total_items > 0 %}
+            <span class="cart-notification">{{ cart.total_items }}</span>
+        {% endif %}
+        </a>
+      </div>
+      <hr/>
+      <div class="scol-15--full scol--top">
+        <div class="side-panel">
+            <a class="side-panel-btn" href="#"><i class="fa fa-bars"></i></a>
+            <ul>
+              <li class="side-panel-toggle">
+                <div class="line">
+                  <div class="scol-15 scol--middle logo">
+                    <a class="brand-text inside" href="/">{{ store.name }}</a>
+                  </div>
+                  <div class="scol-5 scol--middle text-right">
                     <a class="side-panel-btn" href="#"><i class="fa fa-bars"></i></a>
-
-                    <ul>
-
-                        <li class="side-panel-toggle">
-                            <div class="line">
-                                <div class="scol-15 scol--middle logo">
-                                     <a class="brand-text inside" href="/">{{ store.name }}</a>
-                                </div>
-                                <div class="scol-5 scol--middle text-right">
-                                    <a class="side-panel-btn" href="#"><i class="fa fa-bars"></i></a>
-                                </div>
-                            </div>
-                        </li>
-
-                        {% for menu_item in menus.main %}
-                           {% if menu_item.children | length >= 1 %}
-
-                                {% include "_nav-children.twig" %}
-
-                           {% else %}
-
-                            <li>
-                                <a href="{{ menu_item.url }}">
-                                    {{ menu_item.name }}
-                                </a>
-                            </li>
-
-                           {% endif %}
-                        {% endfor %}
-                    </ul>
-
+                  </div>
                 </div>
-
-            </div>
-
-            <div class="scol-5--full scol--top text-right">
-
-                <form action="/buscar" method="get" class="main-search">
-                    <input class="rounded" type="text" name="q" placeholder="BÚSQUEDA" autocomplete="on">
-                    <button type="submit" class="glyphicon glyphicon-search"></button>
-                </form>
-
-            </div>
-
+              </li>
+              {% for menu_item in menus.main %}
+                {% if menu_item.children | length >= 1 %}
+                  {% include "_nav-children.twig" %}
+                {% else %}
+                <li>
+                  <a href="{{ menu_item.url }}">
+                  {{ menu_item.name }}
+                  </a>
+                </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
         </div>
-
+      </div>
+        <div class="scol-5--full scol--top text-right">
+          <form action="/buscar" method="get" class="main-search">
+            <input class="rounded" type="text" name="q" placeholder="BÚSQUEDA" autocomplete="on">
+            <button type="submit" class="glyphicon glyphicon-search"></button>
+          </form>
+        </div>
     </div>
-
+  </div>
 </nav>

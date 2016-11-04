@@ -1,0 +1,17 @@
+<div class="newsletter pad">
+  {% form 'newsletter' %}
+    <div class="container">
+      <div class="row line">
+        <div class="col-sm-4 vcenter">
+          <p>{{ settings.featured_newsletter_text }}</p>
+        </div>
+        <div class="col-sm-4 vcenter">
+          <input type="text" name="newsletter" placeholder="Escribe tu email aquì">
+        </div>
+        <div class="col-sm-4 vcenter">
+          <button type="submit" class="btn col-xs-12">Suscríbete</button>
+        </div>
+      </div>
+    </div>
+  {% endform %}
+</div>
