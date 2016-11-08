@@ -4,7 +4,7 @@
       <div class="scol-10--full scol--middle logo">
         <a href="/">
           {% if settings.use_logo %}
-            <img src="{{ settings['nav_logo'] }}" alt="{{ store.name }}">
+            <img src="{{ settings.nav_logo }}" alt="{{ store.name }}">
           {% else %}
             <span class="brand-text">{{ store.name }}</span>
           {% endif %}
@@ -12,24 +12,27 @@
       </div>
 
       <div class="scol-10--full scol--middle text-right top-options">
-        {% if customer %}
-        <a href="/cuenta">
-          <!-- <i class="fa fa-user"></i> -->
-          <img src="{{ 'login.svg' | asset_url }}" alt="Account">
-          <span>Mi cuenta</span>
-        </a>
-        <span> | </span>
-        <a href="/cuenta/logout">
-        <i class="fa fa-user"></i>
-          <span>Salir</span>
-        </a>
-      {% else %}
-        <a href="/cuenta/login">
-          <!-- <i class="fa fa-user"></i> -->
-          <img src="{{ 'login.svg' | asset_url }}" alt="Loggin">
-          <span>Acceder</span>
-        </a>
+        {% if store.customer_accounts_enabled_or_optional %}
+          {% if customer %}
+          <a href="/cuenta">
+            <!-- <i class="fa fa-user"></i> -->
+            <img src="{{ 'login.svg' | asset_url }}" alt="Account">
+            <span>Mi cuenta</span>
+          </a>
+          <span> | </span>
+          <a href="/cuenta/logout">
+          <i class="fa fa-user"></i>
+            <span>Salir</span>
+          </a>
+        {% else %}
+          <a href="/cuenta/login">
+            <!-- <i class="fa fa-user"></i> -->
+            <img src="{{ 'login.svg' | asset_url }}" alt="Loggin">
+            <span>Acceder</span>
+          </a>
+        {% endif %}
       {% endif %}
+
       {% if cart.total_items > 0 %}
         <a class="shopping-cart active" href="/carrito">
       {% else %}
@@ -74,7 +77,7 @@
       </div>
         <div class="scol-5--full scol--top text-right">
           <form action="/buscar" method="get" class="main-search">
-            <input class="rounded" type="text" name="q" placeholder="BÚSQUEDA" autocomplete="on">
+            <input class="rounded" type="text" name="q" placeholder="Buscar..." autocomplete="on">
             <button type="submit" class="glyphicon glyphicon-search"></button>
           </form>
         </div>
