@@ -26,16 +26,17 @@
       </div>
     </div>
 
+    {% if post.image_url is not empty and post.image_url is defined %}
     <div class="row">
-      <div class="col-sm-12">
-        {% if post.image_url is not empty and post.image_url is defined %}
-        <div class="col-sm-12 text-center">
-          <img src="{{  post.image_url }}?w=800&h=480" alt="{{ post.name | escape }}" class="blog__img">
-        </div>
-        {% endif %}
-        <div class="col-sm-12">
-          {{ post.content }}
-        </div>
+      <div class="text-center">
+        <img src="{{  post.image_url }}?w=800&h=480" alt="{{ post.name | escape }}" class="blog__img">
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="row pad">
+      <div class="col-sm-12 col-md-8 col-md-offset-2 ">
+        {{ post.content }}
       </div>
     </div>
 
