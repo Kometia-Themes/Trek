@@ -23,8 +23,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ page_title | escape }}" />
   {% if settings.use_logo %}
-    <meta property="og:image" content="{{ settings['logo.png'] | replace({ 'https://': 'http://' }) }}" />
-    <meta property="og:image:secure_url" content="https:{{ settings['logo.png'] | replace({ 'http://': 'https://' }) }}" />
+    <meta property="og:image" content="{{ settings.nav_logo | replace({ 'https://': 'http://' }) }}" />
+    <meta property="og:image:secure_url" content="https:{{ settings.nav_logo | replace({ 'http://': 'https://' }) }}" />
   {% endif %}
 {% endif %}
 
