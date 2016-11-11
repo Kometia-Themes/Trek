@@ -40,18 +40,17 @@
             {% endif %}
 
             {% if product.skus_modifiers | length > 0 %}
-            <p class="product-features hide-product-{{ index }}">Disponible en</p>
-            <div>
               {% for attribute, attribute_variants in product.skus_modifiers %}
+              <p class="product-features hide-product-{{ index }}">{{ attribute }}</p>
               <div class="form-group hide-product-{{ index }}">
                 {% set step = loop.index - 1 %}
+                {% set default_variant = product.sku.modifiers[step] %}
                 {% for variant in attribute_variants %}
-                <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ variant }}" class="sku-selectors">
+                <input id="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}" type="radio" name="{{ step }}" value="{{ variant }}" class="sku-selectors" {% if default_variant == variant %}checked="checked"{% endif %}>
                 <label for="{{ product.sku.id }}_{{ variant }}_{{ loop.index0 }}">{{ variant }}</label>
                 {% endfor %}
               </div>
               {% endfor %}
-            </div>
             {% endif %}
 
             <div class="row">
