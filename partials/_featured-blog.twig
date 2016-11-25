@@ -14,9 +14,9 @@
               {% for post in featured_blog.posts | slice(0, limit)  %}
               <div class="col-sm-12">
                 {% if loop.index % 2 == 0 %}
-                  {% include "_blog-card.twig" with {'side': 'right'} %}
+                  {% include "_blog-card.twig" with {'side': 'right', 'blog': featured_blog} %}
                 {% else %}
-                  {% include "_blog-card.twig" %}
+                  {% include "_blog-card.twig" with {'blog': featured_blog} %}
                 {% endif %}
               </div>
               {% endfor %}
