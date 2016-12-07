@@ -1,10 +1,14 @@
-<li>
+<li class="tree-item">
   {% if category.permalink == current.permalink %}
-    {{ category.title }}
+    {{ category.title | title }}
   {% else %}
-    <a href="/categorias/{{ category.permalink }}">{{ category.title }}</a>
+    <a href="/categorias/{{ category.permalink }}">{{ category.title | title }}</a>
   {% endif %}
   {% for sub_category in category.children %}
+    <li>
+      <ul>
     {% include '_category_tree_item.twig' with { 'category' : sub_category, 'current'  : current } only %}
+      </ul>
+    </li>
   {% endfor %}
 </li>
