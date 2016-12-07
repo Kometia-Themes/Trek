@@ -1,6 +1,6 @@
 {% if settings.featured_products_limit > 0 %}
   {% if settings.featured_products_collection is not empty and collections[settings.featured_products_collection] is defined %}
-  {% set featured_products = collections[settings.featured_products_collection].products %}
+    {% set featured_products = collections[settings.featured_products_collection].products %}
   {% endif %}
   {% if settings.featured_products_collection is not empty %}
     {% if featured_products | length > 0 %}

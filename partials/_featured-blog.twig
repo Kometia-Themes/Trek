@@ -11,15 +11,17 @@
         </div>
         <div class="row">
           {% if featured_blog.posts | length > 0 %}
-              {% for post in featured_blog.posts | slice(0, limit)  %}
-              <div class="col-sm-12">
-                {% if loop.index % 2 == 0 %}
-                  {% include "_blog-card.twig" with {'side': 'right', 'blog': featured_blog} %}
-                {% else %}
-                  {% include "_blog-card.twig" with {'blog': featured_blog} %}
-                {% endif %}
-              </div>
+            <div class="col-xs-12">
+              {% for posts_row in featured_blog.posts | slice(0, limit) | batch(3) %}
+                <div class="row">
+                  {% for post in posts_row %}
+                    <div class="col-xs-12 col-sm-4 margin-bottom">
+                        {% include "_blog-card.twig" with { 'blog': featured_blog } %}
+                    </div>
+                  {% endfor %}
+                </div>
               {% endfor %}
+            </div>
           {% else %}
           <div class="container">
             <div class="row pad">

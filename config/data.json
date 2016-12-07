@@ -148,7 +148,7 @@
       "featured_blog_is_enabled": true,
       "featured_blog_home_thumbnails_enabled": true,
       "featured_blog_thumbnails_enabled": true,
-      "featured_blog": "",
+      "featured_blog": "noticias",
       "featured_blog_title": "Tips de nuestro Blog",
       "featured_blog_limit": "3",
       "featured_newsletter_text": "¡Entérate de nuestras ofertas!",
