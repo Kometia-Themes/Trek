@@ -1,14 +1,8 @@
-<li class="tree-item">
-  {% if category.permalink == current.permalink %}
-    {{ category.title | title }}
-  {% else %}
-    <a href="/categorias/{{ category.permalink }}">{{ category.title | title }}</a>
-  {% endif %}
-  {% for sub_category in category.children %}
-    <li>
-      <ul>
-    {% include '_category_tree_item.twig' with { 'category' : sub_category, 'current'  : current } only %}
-      </ul>
-    </li>
-  {% endfor %}
-</li>
+{% if category.permalink == current.permalink %}
+  <a href="/categorias/{{ category.permalink }}" style="padding-left:{{ padding }}px; color: {{ settings.btn_color }}; background-color: {{ settings.btn_background_color }};" class="list-group-item">{{ category.title | title }}</a>
+{% else %}
+  <a href="/categorias/{{ category.permalink }}" style="padding-left:{{ padding + 10 }}px;" class="list-group-item">{{ category.title | title }}</a>
+{% endif %}
+{% for sub_category in category.children %}
+    {% include '_category_tree_item.twig' with { 'category' : sub_category, 'current'  : current, 'padding': 24 } %}
+{% endfor %}

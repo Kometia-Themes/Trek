@@ -12,16 +12,11 @@
     {% set has_categories = categories | length > 0 %}
     {% if has_categories %}
     <div class="col-md-3 categories-filter">
-      <div class="sidebar">
-        <h4>Categorías</h4>
-        <hr>
-        <div class="categories__container">
+      <div class="list-group">
+        <a href="#" class="list-group-item disabled" style="background-color: {{ settings.main_menu_background_color }}; color: {{ settings.main_menu_link_color }};">Categorías</a>
         {% for category_element in categories %}
-          <ul class="category">
-          {% include '_category_tree_item.twig' with { 'category': category_element, 'current': category } only %}
-          </ul>
+          {% include '_category_tree_item.twig' with { 'category': category_element, 'current': category, 'padding': 15 } %}
         {% endfor %}
-        </div>
       </div>
     </div>
     {% endif %}
@@ -45,9 +40,7 @@
           {% endfor %}
         </div>
       </div>
-
-    {% include '_pagination.twig' %}
-
+      {% include '_pagination.twig' %}
     {% endif %}
     </div>
   </div>
