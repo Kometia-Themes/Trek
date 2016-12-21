@@ -389,6 +389,13 @@
   }, {
     "name": "Encabezado",
     "sections": [{
+      "header": "Menú Secundario",
+      "settings": [{
+        "type": "text",
+        "id": "top_right_nav",
+        "label": "Identificador del menú"
+      }]
+    }, {
       "header": "Logo y Favicon",
       "settings": [{
         "type": "checkbox",

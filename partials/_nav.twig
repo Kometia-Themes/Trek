@@ -1,21 +1,28 @@
 <nav class="main-menu">
   <div class="container">
     <div class="line fix">
-      <div class="scol-10--full scol--middle logo">
+      <div class="scol-8--full scol--middle logo">
         <a href="/">
-          {% if settings.use_logo %}
-            <img src="{{ settings.nav_logo }}" alt="{{ store.name }}">
-          {% else %}
-            <span class="brand-text">{{ store.name }}</span>
-          {% endif %}
+        {% if settings.use_logo %}
+          <img src="{{ settings.nav_logo }}" alt="{{ store.name }}">
+        {% else %}
+          <span class="brand-text">{{ store.name }}</span>
+        {% endif %}
         </a>
       </div>
-
-      <div class="scol-10--full scol--middle text-right top-options">
-        {% if store.customer_accounts_enabled_or_optional %}
-          {% if customer %}
+      <div class="scol-12--full scol--middle text-right top-options scol--no-mrg-bottom hidden-xs hidden-sm">
+        <div class="line fix">
+          <ul style="display:inline-block;">
+          {% for menu_item in attribute(menus, settings.top_right_nav) %}
+            {% if menu_item | length > 0 %}
+              <li style="display:inline-block"><a href="{{ menu_item.url }}">{{ menu_item.name }}</a></li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </div>
+      {% if store.customer_accounts_enabled_or_optional %}
+        {% if customer %}
           <a href="/cuenta">
-            <!-- <i class="fa fa-user"></i> -->
             <img src="{{ 'login.svg' | asset_url }}" alt="Account">
             <span>Mi cuenta</span>
           </a>
@@ -26,7 +33,6 @@
           </a>
         {% else %}
           <a href="/cuenta/login">
-            <!-- <i class="fa fa-user"></i> -->
             <img src="{{ 'login.svg' | asset_url }}" alt="Loggin">
             <span>Acceder</span>
           </a>
@@ -38,12 +44,11 @@
       {% else %}
         <a class="shopping-cart" href="/carrito">
       {% endif %}
-        <!-- <i class="fa fa-shopping-cart"></i> -->
         <img src="{{ 'shopcart.svg'| asset_url }}" alt="Carrito">
-        <span>Carrito</span>
-        {% if cart.total_items > 0 %}
+          <span>Carrito</span>
+          {% if cart.total_items > 0 %}
             <span class="cart-notification">{{ cart.total_items }}</span>
-        {% endif %}
+          {% endif %}
         </a>
       </div>
       <hr/>
@@ -61,17 +66,26 @@
                   </div>
                 </div>
               </li>
-              {% for menu_item in menus.main %}
-                {% if menu_item.children | length >= 1 %}
-                  {% include "_nav-children.twig" %}
-                {% else %}
+            {% for menu_item in menus.main %}
+              {% if menu_item.children | length >= 1 %}
+                {% include "_nav-children.twig" %}
+              {% else %}
+              <li>
+                <a href="{{ menu_item.url }}">
+                {{ menu_item.name }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+            {% for menu_item in attribute(menus, settings.top_right_nav) %}
+              {% if menu_item | length > 0 %}
                 <li>
                   <a href="{{ menu_item.url }}">
                   {{ menu_item.name }}
                   </a>
                 </li>
-                {% endif %}
-              {% endfor %}
+              {% endif %}
+            {% endfor %}
             </ul>
         </div>
       </div>
