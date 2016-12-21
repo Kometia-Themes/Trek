@@ -79,7 +79,7 @@
             {% endfor %}
             {% for menu_item in attribute(menus, settings.top_right_nav) %}
               {% if menu_item | length > 0 %}
-                <li>
+                <li class="hidden-md hidden-lg">
                   <a href="{{ menu_item.url }}">
                   {{ menu_item.name }}
                   </a>
