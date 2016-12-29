@@ -33,11 +33,11 @@
           <div class="col-md-2 col-sm-3 col-xs-3">
             <a href="/productos/{{ item.product.permalink }}">
               {% if item.sku.image_url is not empty %}
-              <img class="img-responsive" src="{{ item.sku.image_url }}?w=400" width="400" alt="{{ item.sku.full_name }}">
+              <img class="img-responsive" src="{{ item.sku.image_url }}?w=400" width="400" alt="{{ item.product.name }}">
               {% elseif item.product.image_url is not empty %}
-              <img class="img-responsive" src="{{ item.product.image_url }}?w=400" width="400" alt="{{ item.sku.full_name }}">
+              <img class="img-responsive" src="{{ item.product.image_url }}?w=400" width="400" alt="{{ item.product.name }}">
               {% else %}
-              <img class="img-responsive" src="{{ 'placeholders/product-11.jpg' | global_img_url }}" width="400" alt="{{ item.sku.full_name }}">
+              <img class="img-responsive" src="{{ 'placeholders/product-11.jpg' | global_img_url }}" width="400" alt="{{ item.product.name }}">
               {% endif %}
             </a>
           </div>
@@ -45,7 +45,9 @@
             <a href="/productos/{{ item.product.permalink }}">
               <h4>{{ item.product.name }}</h4>
             </a>
+            {% if item.product.modifiers.count > 1 %}
             <p>En: <span class="bold">{{ item.sku.name }}</span></p>
+            {% endif %}
           </div>
           <br class="clear visible-xs visible-sm">
           <div class="col-md-2 col-sm-4 col-xs-6 cen">
