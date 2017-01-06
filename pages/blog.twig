@@ -18,7 +18,7 @@
       <div class="col-sm-5">
         <a class="blog__img__link" href="/blogs/{{ blog.permalink }}/posts/{{ post.permalink }}">
           {% if post.image_url is not empty and post.image_url is defined %}
-          <img src="{{ post.image_url }}?w=450&h=450" alt="{{ post.name | escape }}" class="img-responsive">
+          <img src="{{ post.image_url }}&w=450&h=450" alt="{{ post.name | escape }}" class="img-responsive">
           {% else %}
           <img src="{{ 'placeholders/product-11.jpg' | global_img_url }}" alt="{{ post.name | escape }}" class="img-responsive">
           {% endif %}
