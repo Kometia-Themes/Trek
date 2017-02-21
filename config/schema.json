@@ -23,6 +23,11 @@
         "default": "#303394"
       }, {
         "type": "color",
+        "id": "brand_color_text_on_main",
+        "label": "Texto sobre color destacado",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
         "id": "separator_border_color",
         "label": "Líneas y Separadores",
         "default": "#E7E7E7"
@@ -118,6 +123,14 @@
         "id": "btn_background_color_hover",
         "label": "Color con mouse encima",
         "default": "#F02028"
+      }]
+    }, {
+      "header": "Colores formularios",
+      "settings": [{
+        "type": "color",
+        "id": "input_border_color",
+        "label": "Bordes campos",
+        "default": "#E7E7E7"
       }]
     }, {
       "header": "Colores Slider",
@@ -262,6 +275,27 @@
         "id": "body_font_size",
         "label": "Tamaño",
         "default": "12px"
+      }, {
+        "type": "select",
+        "id": "base_font_weight",
+        "label": "Peso de la fuente",
+        "default": "300",
+        "options": [
+          {
+          "value": "100",
+          "label": "100"
+          },
+          {
+          "value": "300",
+          "label": "300"
+        }, {
+          "value": "400",
+          "label": "400"
+          },
+          {
+          "value": "500",
+          "label": "500"
+          }]
       }]
     }, {
       "header": "Encabezados y Títulos",
@@ -384,6 +418,23 @@
         "id": "heading_font_size",
         "label": "Tamaño de Títulos",
         "default": "16px"
+      }, {
+        "type": "select",
+        "id": "heading_font_weight",
+        "label": "Peso de la fuente",
+        "default": "700",
+        "options": [
+          {
+          "value": "500",
+          "label": "500"
+          },
+          {
+          "value": "700",
+          "label": "700"
+        }, {
+          "value": "900",
+          "label": "900"
+          }]
       }]
     }]
   }, {
@@ -422,7 +473,22 @@
   }, {
     "name": "Pie de página",
     "icon": "footer",
-    "sections": [{
+    "sections": [
+    {
+      "header": "Redes Sociales",
+      "settings": [{
+        "type": "checkbox",
+        "id": "footer_display_social",
+        "label": "Mostrar"
+      }]
+    }, {
+      "header": "Metodos de pago",
+      "settings": [{
+        "type": "checkbox",
+        "id": "footer_display_payment_methods",
+        "label": "Mostrar"
+      }]
+    }, {
       "header": "Datos de contacto",
       "settings": [{
         "type": "text",
@@ -1048,7 +1114,8 @@
   }, {
     "name": "Página de Inicio - Consejos",
     "icon": "home-page",
-    "sections": [{
+    "sections": [
+    {
       "header": "Título de sección",
       "settings": [{
         "type": "text",
@@ -1130,7 +1197,8 @@
     "name": "Página de Inicio - Banner",
     "icon": "home-page",
     "sections": [{
-      "settings": [{
+      "settings": [
+      {
         "type": "image",
         "id": "main_banner_background",
         "label": "Imagen de fondo"
@@ -1182,7 +1250,8 @@
     "name": "Página de Inicio - Blog",
     "icon": "home-page",
     "sections": [{
-      "settings": [{
+      "settings": [
+      {
         "type": "blog",
         "id": "featured_blog",
         "label": "Seleccionar blog"
@@ -1249,7 +1318,13 @@
         "id": "enable_product_image_zoom",
         "label": "Habilitar zoom en imagen principal",
         "default": true
-      }]
+      }, {
+        "type": "color",
+        "id": "product_discount_price_color",
+        "label": "Color del precio normal",
+        "default": "#F02028"
+      }
+    ]
     }]
   }, {
     "name": "Contacto",
@@ -1353,16 +1428,6 @@
         "info": "https://plus.google.com/+shoperti"
       }, {
         "type": "text",
-        "id": "youtube_link",
-        "label": "Youtube",
-        "info": "https://www.youtube.com/user/shoperti"
-      }, {
-        "type": "text",
-        "id": "vimeo_link",
-        "label": "Vimeo",
-        "info": "https://vimeo.com/shoperti"
-      }, {
-        "type": "text",
         "id": "pinterest_link",
         "label": "Pinterest",
         "info": "https://www.pinterest.com/shoperti/"
@@ -1371,11 +1436,6 @@
         "id": "instagram_link",
         "label": "Instagram",
         "info": "https://instagram.com/shoperti/"
-      }, {
-        "type": "text",
-        "id": "tumblr_link",
-        "label": "Tumblr",
-        "info": "http://shoperti.tumblr.com/"
       }, {
         "type": "text",
         "id": "whatsapp_link",

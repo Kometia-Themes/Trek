@@ -1,62 +1,58 @@
-{% if settings.featured_blog_is_enabled %}
-  {% if blogs[settings.featured_blog] is defined %}
-    {% set featured_blog = blogs[settings.featured_blog] %}
-    {% set limit = settings.featured_blog_limit is not empty ? min(0 + settings.featured_blog_limit, 50) : 5 %}
-    <div class="featured-blog">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 c-brand-h">
-            <h2 class="c-brand upper">{{ settings.featured_blog_title }}</h2>
-          </div>
+{% if blogs[settings.featured_blog] is defined %}
+  {% set featured_blog = blogs[settings.featured_blog] %}
+  {% set limit = settings.featured_blog_limit is not empty ? min(0 + settings.featured_blog_limit, 50) : 5 %}
+  <div class="featured-blog">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 c-brand-h">
+          <h2 class="c-brand upper">{{ settings.featured_blog_title }}</h2>
         </div>
-        <div class="row">
-          {% if featured_blog.posts | length > 0 %}
-            <div class="col-xs-12">
-              {% for posts_row in featured_blog.posts | slice(0, limit) | batch(3) %}
-                <div class="row">
-                  {% for post in posts_row %}
-                    <div class="col-xs-12 col-sm-4 margin-bottom">
-                        {% include "_blog-card.twig" with { 'blog': featured_blog } %}
-                    </div>
-                  {% endfor %}
-                </div>
-              {% endfor %}
-            </div>
-          {% else %}
-          <div class="container">
-            <div class="row pad">
-              <div class="col-sm-12">
-                <div class="placeholder-help">
-                  <div class="placeholder-helper">
-                    <div class="placeholder-info">
-                      <p>Todavía no hay posts publicados o no haz seleccionado un blog, sin embargo, una vez que agregues post o selecciones un blog, éstos aparecerán aquí.</p>
-                      <a href="/admin/posts" class="btn btn-placeholder">Agregar Posts</a>
-                    </div>
+      </div>
+      <div class="row">
+        {% if featured_blog.posts | length > 0 %}
+          <div class="col-xs-12">
+            {% for posts_row in featured_blog.posts | slice(0, limit) | batch(3) %}
+              <div class="row">
+                {% for post in posts_row %}
+                  <div class="col-xs-12 col-sm-4 margin-bottom">
+                      {% include "_blog-card.twig" with { 'blog': featured_blog } %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+        <div class="container">
+          <div class="row pad">
+            <div class="col-sm-12">
+              <div class="placeholder-help">
+                <div class="placeholder-helper">
+                  <div class="placeholder-info">
+                    <p>Todavía no hay posts publicados o no haz seleccionado un blog, sin embargo, una vez que agregues post o selecciones un blog, éstos aparecerán aquí.</p>
+                    <a href="/admin/posts" class="btn btn-placeholder">Agregar Posts</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {% endif %}
         </div>
+        {% endif %}
       </div>
     </div>
-  {% else %}
-    <div class="container">
-      <div class="row pad">
-        <div class="col-sm-12">
-          <div class="placeholder-help">
-            <div class="placeholder-helper">
-              <div class="placeholder-info">
-                <p>Todavía no hay un blog destacado seleccionado.</p>
-                <a href="/admin/blogs" class="btn btn-placeholder">Agregar blog</a>
-              </div>
+  </div>
+{% else %}
+  <div class="container">
+    <div class="row pad">
+      <div class="col-sm-12">
+        <div class="placeholder-help">
+          <div class="placeholder-helper">
+            <div class="placeholder-info">
+              <p>Todavía no hay un blog destacado seleccionado.</p>
+              <a href="/admin/blogs" class="btn btn-placeholder">Agregar blog</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-  {% endif %}
+  </div>
 {% endif %}
-<script>
-</script>
