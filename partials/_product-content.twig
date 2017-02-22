@@ -30,7 +30,7 @@
             <br/>
             {% endif %}
 
-            {% if product.sku.compared_price > 0 %}
+            {% if product.sku.compared_price > product.sku.price %}
             <p class="product-price-data__text" id="js-price-preview"><del>{{ product.sku.compared_price | money('symbol', 'code') }}</del><br><span class="product-price-data-price product-price__discount">{{ product.sku.price | money('symbol', 'code') }}</span>
             </p>
             {% else %}

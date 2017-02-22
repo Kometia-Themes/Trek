@@ -11,7 +11,7 @@
       <h3 class="product-card-data__title">
         <a href="/productos/{{ product.permalink }}">{{ product.name }}</a>
       </h3>
-      {% if product.sku.compared_price > 0 %}
+      {% if product.sku.compared_price > product.sku.price %}
       <p class="product-price-data__text"><del>{{ product.sku.compared_price | money('symbol', 'code') }}</del>
       <span class="product-price-data-price product-price__discount">{{ product.sku.price | money('symbol', 'code') }}</span>
       </p>
