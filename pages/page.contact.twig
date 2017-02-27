@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    {% if settings.map_is_enabled %}
+    {% if settings.map_is_enabled and settings.map_address is not empty and settings.map_api_key is not empty %}
     <div class="row">
       <div class="col-sm-12 text-center map">
         <div id="map" class="contact__map"></div>
@@ -83,7 +83,7 @@
 
 {% block body_js %}
 {{ parent() }}
-{% if settings.map_is_enabled %}
+{% if settings.map_is_enabled and settings.map_address is not empty and settings.map_api_key is not empty %}
 <script>
   var map;
   var address = "{{ settings.map_address }}";

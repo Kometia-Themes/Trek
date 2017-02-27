@@ -52,7 +52,7 @@
           <br class="clear visible-xs visible-sm">
           <div class="col-md-2 col-sm-4 col-xs-6 cen">
             <label class="visible-sm visible-xs">Precio unitario</label>
-            {% if item.compared_price > 0 %}
+            {% if item.compared_price > item.price %}
             <p class="product-price">
               <del>{{ item.compared_price | money('symbol', 'code') }}</del>
               <span class="product-price-data-price product-price__discount">{{ item.price | money('symbol', 'code') }}</span>
