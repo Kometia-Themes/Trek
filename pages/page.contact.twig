@@ -68,10 +68,10 @@
         {% endif %}
 
         {% form 'contact' %}
-        <input type="text" id="name" name="name" placeholder="Nombre">
-        <input type="email" id="email" name="email" placeholder="Correo electrónico">
-        <input type="tel" id="phone" name="phone" placeholder="Teléfono">
-        <textarea id="mensaje" name="mensaje" placeholder="Mensaje"></textarea>
+        <input type="text" id="name" name="message[content][name]" placeholder="Nombre">
+        <input type="email" id="email" name="message[email]" placeholder="Correo electrónico">
+        <input type="tel" id="phone" name="message[content][phone]" placeholder="Teléfono">
+        <textarea id="mensaje" name="message[content][mensaje]" placeholder="Mensaje"></textarea>
         <button type="submit" class="btn btn--outline">Enviar</button>
         {% endform %}
       </div>
