@@ -20,7 +20,7 @@
     </div>
     <div class="pad-min"></div>
     <div class="row">
-      {% if results.products | length <= 0 %}
+      {% if results.products | length == 0 %}
       <div class="col-sm-12">
         <p>No se encontraron productos con los términos de búsqueda.</p>
       </div>
